@@ -30,6 +30,7 @@ namespace WebApplication7.Controllers
                 return RedirectToAction("AdminDashboard", "Home");
             }
 
+
         }
         public ActionResult AdminDashboard()
         {
