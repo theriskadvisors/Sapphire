@@ -1,0 +1,108 @@
+﻿@model IEnumerable<WebApplication7.Models.Employee>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+}
+
+<style>
+        .col-lg-2 {
+        width: 53.666667%;
+    }
+    #cre:hover {
+        background-color: #1cc7d0 !important;
+        color: #ffffff !important;
+    }
+    .dataTables_wrapper .dataTables_info {
+        clear: both;
+        float: left;
+        padding-top: 0.755em;
+    }
+    th {
+        height: 50px;
+        text-align: left;
+        font-weight: 600;
+        color: #1cc7d0;
+        box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px;
+    }
+    td{
+        text-align:left;
+    }
+   
+</style>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+        drawTable();
+    });
+    function drawTable() {
+        $('#example_filter').addClass("form-group");
+        $('#example_filter').addClass("has-feedback");
+        $('#example_length').addClass("col-lg-9 col-md-8 col-sm-12 col-xs-12");
+        $('#example_wrapper').css("text-align", "right");
+        $('#example_length').css("text-align", "left");
+        $('#example_length label').addClass("col-md-3 col-sm-12 col-lg-2");
+        $("#example_length label").css("text-align", "left");
+        $('#example_length label').addClass("col-md-2 col-lg-2 col-sm-12");
+        $('#example_filter input').css({ "border": "1px solid #ddd", "height": "30px", "margin-top": "0px", "outline": "none", "padding-left": "10px", "color": "#000000 !important" });
+
+        $('#example_filter input').addClass("add");
+        $('#example_filter').append('<span class="form-control-feedback" style="margin-top: -25px;  color: #666;"></span>');
+        var list = $("#Position").html();
+        $('#example_length').append(
+            '<div class="col-md-4">' +
+            '<button class="form-control" id="cre" onclick=window.location.href="/Employees/Create"  value="Create"  style="border-radius:45px; width:135%; margin-bottom:10px; border-color:#1cc7d0;color:#1cc7d0;background-color:#ffffff"><i class="fa fa-plus" aria-hidden="true"></i> Add New</button>' +
+            '</div>'
+        );
+        $("#Class").prepend("<option value='0' selected>All</option>");
+    }
+</script>
+
+
+
+<div class="popular-bran-right" id="maindiv" style="background-color:#ffffff;margin-top:0px;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+    <h2>Employee List</h2>
+<hr />
+    <table id="example" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    Phone Number    
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CNIC)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+        
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CNIC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    
+                </tr>
+            }
+        </tbody>
+
+
+    </table>
+</div>

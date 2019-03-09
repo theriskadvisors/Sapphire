@@ -1,0 +1,75 @@
+﻿@model WebApplication7.Models.TotalRevenue
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TotalRevenue</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Less)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Less)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Add)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Add)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PreviousBalance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreviousBalance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentBalance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentBalance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeekNumber.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeekNumber.Id)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

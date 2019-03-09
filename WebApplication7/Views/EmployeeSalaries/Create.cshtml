@@ -1,0 +1,122 @@
+﻿@model WebApplication7.Models.EmployeeSalary
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+}
+
+<style>
+    textarea {
+        margin: 0px;
+        border-radius: 5px;
+        width: 100%;
+        height: 127px;
+    }
+
+    .color {
+        background-color: orange;
+        border: none;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        margin: 4px 2px;
+        opacity: 0.6;
+        transition: 0.8s;
+    }
+
+    .color2 {
+        background-color: orange;
+        border: none;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        margin: 4px 2px;
+        opacity: 0.6;
+        transition: 0.8s;
+    }
+
+    .color:hover {
+        opacity: 1
+    }
+
+    .color2:hover {
+        opacity: 1;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        var count = 1;
+        $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '/EmployeeSalaries/GetEmployees',
+            success: function (data) {
+                $.each(data.employeelist, function (i, item) {
+                    $("#subdiv").append('<div class="col-md-12"><div class="col-md-2"><span id="name' + count + '">' + item + '</span></div>' +
+                        '<div class="col-md-1" ><input type="number" onkeyup="CalSal(' + count + ')" id="hours' + count + '" class="form-control" /></div >' +
+                        '<div class="col-md-1"><input type="number" onkeyup="CalSal(' + count + ')" id="hourlyrate' + count + '" class="form-control" /></div>' +
+                        '<div class="col-md-1"><input type="number" style="text-align:center" value="' + data.weekno + '" id="week' + count + '" class="form-control" readonly/></div>' +
+                        '<div class="col-md-2"><input type="date" id="date' + count + '" class="form-control" /></div>' +
+                        '<div class="col-md-1"><input type="number" id="total' + count + '" class="form-control" readonly/></div>' +
+                        '<div class="col-md-1 col-md-offset-1"><button onclick="SaveSalary(' + count + ')" class="btn btn-success">Paid</button></div><div class="col-nd-2"><span id="Error" style="color:red"></span></div><br /><br /></div>')
+                    count++;
+                })
+             }
+        }); 
+    })
+    var SalaryDetail =
+    {
+        Name: '',
+        Hours: '',
+        HourlyRate: '',
+        Date: '',
+        Week: '',
+        Total:'',
+    };
+    function SaveSalary(e) {
+        debugger;
+        SalaryDetail = Object.create(SalaryDetail);
+        SalaryDetail.Name = $('#name' + e).html();
+        SalaryDetail.Hours = $('#hours' + e).val();
+        SalaryDetail.HourlyRate = $('#hourlyrate' + e).val();
+        SalaryDetail.Week = $('#week' + e).val();
+        SalaryDetail.Date = $('#date' + e).val();
+        SalaryDetail.Total = $('#total' + e).val();
+             $.ajax({
+                    type: 'POST',
+                    url: '/EmployeeSalaries/SaveSalary',
+                 data: SalaryDetail,
+                    success: function (data) {
+                        $('.eeniart0017').css("display", "none");
+                            
+                        if (data == 'True') {
+                        
+                        } else {
+                            $("#Error").html("Error: Salary already Added!")
+                        }
+                    }
+                });
+    }
+    function CalSal(e) {
+        var hrs = $("#hours" + e).val();
+        var hrate = $("#hourlyrate"+ e).val();
+        var salary = hrs * hrate;
+        $("#total"+e).val(salary);
+    }
+</script>
+<div class="col-md-12" id="subdiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+    <h4>Employee Salary</h4>
+    <hr />
+    <div class="col-md-12">
+        <div class="col-md-2"><span><b>Name</b></span></div>
+        <div class="col-md-1" style="text-align:center"><span><b>Hours</b></span></div>
+        <div class="col-md-1" style="text-align:center"><span><b>Hourly Rate</b></span></div>
+        <div class="col-md-1" style="text-align:center"><span><b>Week #</b></span></div>
+        <div class="col-md-2" style="text-align:center"><span><b>Date</b></span></div>
+        <div class="col-md-1" style="text-align:center"><span><b>Total</b></span></div>
+        <br /><br />
+    </div>
+</div>
+

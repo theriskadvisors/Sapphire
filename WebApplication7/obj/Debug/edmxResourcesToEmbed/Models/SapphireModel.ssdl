@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SapphireDataBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="CNIC" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="CNIC" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="EmployeeSalary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Hours" Type="int" />
+    <Property Name="HourlyRate" Type="nchar" MaxLength="10" />
+    <Property Name="EmployeeId" Type="int" />
+    <Property Name="WeekId" Type="int" />
+    <Property Name="Date" Type="date" />
+    <Property Name="Total" Type="int" />
+  </EntityType>
+  <EntityType Name="ExpenseDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExpenseTypeId" Type="int" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="Amount" Type="float" />
+    <Property Name="WeekId" Type="int" />
+    <Property Name="Date" Type="date" />
+  </EntityType>
+  <EntityType Name="ExpenseType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Inventory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="InventoryRecord">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InventoryId" Type="int" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Price" Type="float" />
+    <Property Name="Date" Type="nvarchar" MaxLength="50" />
+    <Property Name="WeekId" Type="int" />
+    <Property Name="VenderName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderNo" Type="int" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="50" />
+    <Property Name="StockId" Type="int" />
+    <Property Name="TotalPrice" Type="float" />
+    <Property Name="Quantity" Type="nchar" MaxLength="10" />
+    <Property Name="OrderDate" Type="nvarchar" MaxLength="50" />
+    <Property Name="DeliveryDate" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsDelivered" Type="nvarchar" MaxLength="50" />
+    <Property Name="Advance" Type="float" />
+    <Property Name="RemainingBalance" Type="float" />
+    <Property Name="WeekId" Type="int" />
+  </EntityType>
+  <EntityType Name="ProductionCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Revenue">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Amount" Type="float" />
+    <Property Name="Date" Type="date" />
+    <Property Name="WeekId" Type="int" />
+  </EntityType>
+  <EntityType Name="Stock">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="ProductionId" Type="int" />
+  </EntityType>
+  <EntityType Name="StockCreationHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderId" Type="int" />
+    <Property Name="InventoryId" Type="int" />
+    <Property Name="QuantityOfInventory" Type="int" />
+    <Property Name="Date" Type="date" />
+  </EntityType>
+  <EntityType Name="Thekedar">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="75" />
+    <Property Name="CNIC" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TotalInventory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InventoryId" Type="int" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Price" Type="float" />
+    <Property Name="Date" Type="date" />
+    <Property Name="WeekId" Type="int" />
+  </EntityType>
+  <EntityType Name="TotalRevenue">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Less" Type="float" />
+    <Property Name="Add" Type="float" />
+    <Property Name="PreviousBalance" Type="float" />
+    <Property Name="CurrentBalance" Type="float" />
+    <Property Name="WeekId" Type="int" />
+    <Property Name="Date" Type="date" />
+  </EntityType>
+  <EntityType Name="WeekNumber">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WeekNo" Type="int" />
+  </EntityType>
+  <Association Name="FK_EmployeeSalary_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="EmployeeSalary" Type="Self.EmployeeSalary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeSalary">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeSalary_WeekNo">
+    <End Role="WeekNumber" Type="Self.WeekNumber" Multiplicity="0..1" />
+    <End Role="EmployeeSalary" Type="Self.EmployeeSalary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeSalary">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExpenseDetail_ExpenseType">
+    <End Role="ExpenseType" Type="Self.ExpenseType" Multiplicity="0..1" />
+    <End Role="ExpenseDetail" Type="Self.ExpenseDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExpenseType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExpenseDetail">
+        <PropertyRef Name="ExpenseTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExpenseDetail_WeekNumber">
+    <End Role="WeekNumber" Type="Self.WeekNumber" Multiplicity="0..1" />
+    <End Role="ExpenseDetail" Type="Self.ExpenseDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExpenseDetail">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Inventory_TotalInventory">
+    <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+    <End Role="TotalInventory" Type="Self.TotalInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TotalInventory">
+        <PropertyRef Name="InventoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InventoryRecord_Inventory">
+    <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+    <End Role="InventoryRecord" Type="Self.InventoryRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InventoryRecord">
+        <PropertyRef Name="InventoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InventoryRecord_WeekNo">
+    <End Role="WeekNumber" Type="Self.WeekNumber" Multiplicity="0..1" />
+    <End Role="InventoryRecord" Type="Self.InventoryRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InventoryRecord">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Stock">
+    <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stock">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="StockId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Week">
+    <End Role="WeekNumber" Type="Self.WeekNumber" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Revenue_WeekNo">
+    <End Role="WeekNumber" Type="Self.WeekNumber" Multiplicity="0..1" />
+    <End Role="Revenue" Type="Self.Revenue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Revenue">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stock_ProductionCategory">
+    <End Role="ProductionCategory" Type="Self.ProductionCategory" Multiplicity="0..1" />
+    <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Stock">
+        <PropertyRef Name="ProductionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockCreationHistory_Inventory">
+    <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+    <End Role="StockCreationHistory" Type="Self.StockCreationHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockCreationHistory">
+        <PropertyRef Name="InventoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockCreationHistory_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="StockCreationHistory" Type="Self.StockCreationHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockCreationHistory">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_totalInventory_WeekNo">
+    <End Role="WeekNumber" Type="Self.WeekNumber" Multiplicity="0..1" />
+    <End Role="TotalInventory" Type="Self.TotalInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TotalInventory">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TotalRevenue_WeekNo">
+    <End Role="WeekNumber" Type="Self.WeekNumber" Multiplicity="0..1" />
+    <End Role="TotalRevenue" Type="Self.TotalRevenue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TotalRevenue">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SapphireDataBaseModelStoreContainer">
+    <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeSalary" EntityType="Self.EmployeeSalary" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExpenseDetail" EntityType="Self.ExpenseDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExpenseType" EntityType="Self.ExpenseType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InventoryRecord" EntityType="Self.InventoryRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionCategory" EntityType="Self.ProductionCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Revenue" EntityType="Self.Revenue" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockCreationHistory" EntityType="Self.StockCreationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Thekedar" EntityType="Self.Thekedar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TotalInventory" EntityType="Self.TotalInventory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TotalRevenue" EntityType="Self.TotalRevenue" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WeekNumber" EntityType="Self.WeekNumber" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_EmployeeSalary_Employee" Association="Self.FK_EmployeeSalary_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="EmployeeSalary" EntitySet="EmployeeSalary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeSalary_WeekNo" Association="Self.FK_EmployeeSalary_WeekNo">
+      <End Role="WeekNumber" EntitySet="WeekNumber" />
+      <End Role="EmployeeSalary" EntitySet="EmployeeSalary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExpenseDetail_ExpenseType" Association="Self.FK_ExpenseDetail_ExpenseType">
+      <End Role="ExpenseType" EntitySet="ExpenseType" />
+      <End Role="ExpenseDetail" EntitySet="ExpenseDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExpenseDetail_WeekNumber" Association="Self.FK_ExpenseDetail_WeekNumber">
+      <End Role="WeekNumber" EntitySet="WeekNumber" />
+      <End Role="ExpenseDetail" EntitySet="ExpenseDetail" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Inventory_TotalInventory" Association="Self.fk_Inventory_TotalInventory">
+      <End Role="Inventory" EntitySet="Inventory" />
+      <End Role="TotalInventory" EntitySet="TotalInventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InventoryRecord_Inventory" Association="Self.FK_InventoryRecord_Inventory">
+      <End Role="Inventory" EntitySet="Inventory" />
+      <End Role="InventoryRecord" EntitySet="InventoryRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InventoryRecord_WeekNo" Association="Self.FK_InventoryRecord_WeekNo">
+      <End Role="WeekNumber" EntitySet="WeekNumber" />
+      <End Role="InventoryRecord" EntitySet="InventoryRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Stock" Association="Self.FK_Order_Stock">
+      <End Role="Stock" EntitySet="Stock" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Week" Association="Self.FK_Order_Week">
+      <End Role="WeekNumber" EntitySet="WeekNumber" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Revenue_WeekNo" Association="Self.FK_Revenue_WeekNo">
+      <End Role="WeekNumber" EntitySet="WeekNumber" />
+      <End Role="Revenue" EntitySet="Revenue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stock_ProductionCategory" Association="Self.FK_Stock_ProductionCategory">
+      <End Role="ProductionCategory" EntitySet="ProductionCategory" />
+      <End Role="Stock" EntitySet="Stock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockCreationHistory_Inventory" Association="Self.FK_StockCreationHistory_Inventory">
+      <End Role="Inventory" EntitySet="Inventory" />
+      <End Role="StockCreationHistory" EntitySet="StockCreationHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockCreationHistory_Order" Association="Self.FK_StockCreationHistory_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="StockCreationHistory" EntitySet="StockCreationHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_totalInventory_WeekNo" Association="Self.FK_totalInventory_WeekNo">
+      <End Role="WeekNumber" EntitySet="WeekNumber" />
+      <End Role="TotalInventory" EntitySet="TotalInventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TotalRevenue_WeekNo" Association="Self.FK_TotalRevenue_WeekNo">
+      <End Role="WeekNumber" EntitySet="WeekNumber" />
+      <End Role="TotalRevenue" EntitySet="TotalRevenue" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

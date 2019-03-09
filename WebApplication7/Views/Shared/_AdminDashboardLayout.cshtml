@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body>
+    <div class="navbar">
+        <a class="col-md-offset-1" href="/Home/Index">Home</a>
+        <a href="/ProductionCategories/Index">Production Category</a>
+        <div class="subnav">
+            <button class="subnavbtn">Employees <i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <a class="col-md-offset-4" href="/Thekedars/Index">Thekedar</a>
+                <a href="/Employees/Index">Other Employees</a>
+                <a href="/EmployeeSalaries/Index">Employee Salary</a>
+            </div>
+        </div>
+        <div class="subnav">
+            <button class="subnavbtn">Inventory <i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <a class="col-md-offset-4" href="/Inventories/Index">Inventory Type</a>
+                <a href="/InventoryRecords/Index">Inventory Record</a>
+                <a href="/TotalInventory/Index">Total Inventory</a>
+            </div>
+        </div>
+        <div class="subnav">
+            <button class="subnavbtn">stock <i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+
+                <a class="col-md-offset-4" href="/Stocks/Index">Stock List</a>
+                <a href="/Orders/Index">Orders</a>
+                <a href="/StockCreationHistories/Index">Stock Creation Record</a>
+
+            </div>
+        </div>
+        <div class="subnav">
+            <button class="subnavbtn">Expense <i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+
+                <a class="col-md-offset-4" href="/ExpenseTypes/Index">Expense Type</a>
+                <a href="/ExpenseDetails/Index">Expense Details</a>
+ 
+            </div>
+        </div>
+        <div class="subnav">
+            <button class="subnavbtn">Revenue <i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+
+                <a class="col-md-offset-4" href="/Revenues/Index">Revenue List</a>
+                <a href="/TotalRevenues/Index">Expense Sheet</a>
+
+            </div>
+        </div>
+        <a class="col-md-1" href="/Account/Index"><i class="fa fa-sign-out"></i>Logout</a>
+    </div>
+    @RenderBody()
+</body>
+</html>

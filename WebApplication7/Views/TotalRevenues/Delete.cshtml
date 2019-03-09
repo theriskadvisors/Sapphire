@@ -1,0 +1,81 @@
+﻿@model WebApplication7.Models.TotalRevenue
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TotalRevenue</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Less)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Less)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Add)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Add)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PreviousBalance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreviousBalance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentBalance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentBalance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeekNumber.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeekNumber.Id)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

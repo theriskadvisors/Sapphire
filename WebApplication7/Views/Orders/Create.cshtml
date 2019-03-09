@@ -1,0 +1,221 @@
+﻿@model WebApplication7.Models.Order
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+}
+<style>
+    textarea {
+        margin: 0px;
+        border-radius: 5px;
+        width: 100%;
+        height: 127px;
+    }
+
+    .color {
+        background-color: orange;
+        border: none;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        margin: 4px 2px;
+        opacity: 0.6;
+        transition: 0.8s;
+    }
+
+    .color2 {
+        background-color: orange;
+        border: none;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        margin: 4px 2px;
+        opacity: 0.6;
+        transition: 0.8s;
+    }
+
+    .color:hover {
+        opacity: 1
+    }
+
+    .color2:hover {
+        opacity: 1;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        CheckVoucherNo();
+        $("#orderno").prop("readonly", true);
+        $("#advance").on("keyup", function () {
+            var ttl = $("#total").val();
+            var adv = $("#advance").val();
+            var bal = ttl - adv;
+            $("#balance").val(bal);
+        })
+
+    })
+    function CheckVoucherNo() {
+        $.ajax({
+            type: "POST",
+            url: "/Orders/FindOrderNo",
+            success: function (data) {
+                $("#orderno").val(data);
+            }
+        });
+    }
+</script>
+<div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "Registerform" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Add New Order</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-1 col-md-offset-1">
+                    <span><b>Order#</b></span>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.OrderNo, new { htmlAttributes = new { @class = "form-control", id = "orderno" } })
+                    @Html.ValidationMessageFor(model => model.OrderNo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-md-offset-1">
+                    <span><b>Customer Name</b></span>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-md-offset-1">
+                    <span><b>Stock type</b></span>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.DropDownList("StockId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StockId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-md-offset-1">
+                    <span><b>Total Price</b></span>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.TotalPrice, new { htmlAttributes = new { @class = "form-control", id = "total" } })
+                    @Html.ValidationMessageFor(model => model.TotalPrice, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-md-offset-1">
+                    <span><b>Quantity</b></span>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-md-offset-1">
+                    <span><b>Oeder Date</b></span>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control", type = "Date" } })
+                    @Html.ValidationMessageFor(model => model.OrderDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-md-offset-1">
+                    <span><b>Delivery Date</b></span>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", type = "Date" } })
+                    @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-md-offset-1">
+                    <span><b>Status</b></span>
+                </div>
+
+                <div class="col-md-6">
+                    <select class="form-control" name="status">
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-md-offset-1">
+                    <span><b>Is Delivered</b></span>
+                </div>
+
+                <div class="col-md-6">
+                    <select class="form-control" name="IsDelivered">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-md-offset-1">
+                    <span><b>Payment</b></span>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Advance, new { htmlAttributes = new { @class = "form-control", id = "advance" } })
+                    @Html.ValidationMessageFor(model => model.Advance, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-md-offset-1">
+                    <span><b>Remaining Amount</b></span>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.RemainingBalance, new { htmlAttributes = new { @class = "form-control", id = "balance" } })
+                    @Html.ValidationMessageFor(model => model.RemainingBalance, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-md-offset-1">
+                    <span><b>Week#</b></span>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.DropDownList("WeekId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.WeekId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+    }
+    <div class="col-md-12 col-md-offset-2 col-sm-12 col-lg-12">
+        <br />
+        <button class="col-md-2 form-control color2" onclick="window.location.href='/Orders/Index'" style="border-radius:35px;border:hidden;margin-right:10px;background-color:#ff0000;color:white;font-size:15px;width:98px;height:38px;font-family:Calibri" id="return"> Return</button>
+        <input class="col-md-2 form-control color" id="submit" type="submit" form="Registerform" value="Save" style="border-radius:35px;color:white;border:hidden;background-color:slateblue;font-size:15px;width:98px;height:38px;font-family:Calibri" />
+        <br /><br /><br />
+
+    </div>
+</div>

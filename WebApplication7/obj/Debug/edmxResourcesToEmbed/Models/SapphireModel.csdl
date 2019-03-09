@@ -1,0 +1,460 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SapphireDataBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="SapphireDataBaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="SapphireDataBaseModel.Account" />
+    <EntitySet Name="Employees" EntityType="SapphireDataBaseModel.Employee" />
+    <EntitySet Name="EmployeeSalaries" EntityType="SapphireDataBaseModel.EmployeeSalary" />
+    <EntitySet Name="ExpenseDetails" EntityType="SapphireDataBaseModel.ExpenseDetail" />
+    <EntitySet Name="ExpenseTypes" EntityType="SapphireDataBaseModel.ExpenseType" />
+    <EntitySet Name="Inventories" EntityType="SapphireDataBaseModel.Inventory" />
+    <EntitySet Name="InventoryRecords" EntityType="SapphireDataBaseModel.InventoryRecord" />
+    <EntitySet Name="Orders" EntityType="SapphireDataBaseModel.Order" />
+    <EntitySet Name="ProductionCategories" EntityType="SapphireDataBaseModel.ProductionCategory" />
+    <EntitySet Name="Revenues" EntityType="SapphireDataBaseModel.Revenue" />
+    <EntitySet Name="Stocks" EntityType="SapphireDataBaseModel.Stock" />
+    <EntitySet Name="StockCreationHistories" EntityType="SapphireDataBaseModel.StockCreationHistory" />
+    <EntitySet Name="Thekedars" EntityType="SapphireDataBaseModel.Thekedar" />
+    <EntitySet Name="TotalInventories" EntityType="SapphireDataBaseModel.TotalInventory" />
+    <EntitySet Name="TotalRevenues" EntityType="SapphireDataBaseModel.TotalRevenue" />
+    <EntitySet Name="WeekNumbers" EntityType="SapphireDataBaseModel.WeekNumber" />
+    <AssociationSet Name="FK_EmployeeSalary_Employee" Association="SapphireDataBaseModel.FK_EmployeeSalary_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EmployeeSalary" EntitySet="EmployeeSalaries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeSalary_WeekNo" Association="SapphireDataBaseModel.FK_EmployeeSalary_WeekNo">
+      <End Role="WeekNumber" EntitySet="WeekNumbers" />
+      <End Role="EmployeeSalary" EntitySet="EmployeeSalaries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExpenseDetail_ExpenseType" Association="SapphireDataBaseModel.FK_ExpenseDetail_ExpenseType">
+      <End Role="ExpenseType" EntitySet="ExpenseTypes" />
+      <End Role="ExpenseDetail" EntitySet="ExpenseDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExpenseDetail_WeekNumber" Association="SapphireDataBaseModel.FK_ExpenseDetail_WeekNumber">
+      <End Role="WeekNumber" EntitySet="WeekNumbers" />
+      <End Role="ExpenseDetail" EntitySet="ExpenseDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Inventory_TotalInventory" Association="SapphireDataBaseModel.fk_Inventory_TotalInventory">
+      <End Role="Inventory" EntitySet="Inventories" />
+      <End Role="TotalInventory" EntitySet="TotalInventories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InventoryRecord_Inventory" Association="SapphireDataBaseModel.FK_InventoryRecord_Inventory">
+      <End Role="Inventory" EntitySet="Inventories" />
+      <End Role="InventoryRecord" EntitySet="InventoryRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockCreationHistory_Inventory" Association="SapphireDataBaseModel.FK_StockCreationHistory_Inventory">
+      <End Role="Inventory" EntitySet="Inventories" />
+      <End Role="StockCreationHistory" EntitySet="StockCreationHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InventoryRecord_WeekNo" Association="SapphireDataBaseModel.FK_InventoryRecord_WeekNo">
+      <End Role="WeekNumber" EntitySet="WeekNumbers" />
+      <End Role="InventoryRecord" EntitySet="InventoryRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Stock" Association="SapphireDataBaseModel.FK_Order_Stock">
+      <End Role="Stock" EntitySet="Stocks" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Week" Association="SapphireDataBaseModel.FK_Order_Week">
+      <End Role="WeekNumber" EntitySet="WeekNumbers" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockCreationHistory_Order" Association="SapphireDataBaseModel.FK_StockCreationHistory_Order">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="StockCreationHistory" EntitySet="StockCreationHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stock_ProductionCategory" Association="SapphireDataBaseModel.FK_Stock_ProductionCategory">
+      <End Role="ProductionCategory" EntitySet="ProductionCategories" />
+      <End Role="Stock" EntitySet="Stocks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Revenue_WeekNo" Association="SapphireDataBaseModel.FK_Revenue_WeekNo">
+      <End Role="WeekNumber" EntitySet="WeekNumbers" />
+      <End Role="Revenue" EntitySet="Revenues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_totalInventory_WeekNo" Association="SapphireDataBaseModel.FK_totalInventory_WeekNo">
+      <End Role="WeekNumber" EntitySet="WeekNumbers" />
+      <End Role="TotalInventory" EntitySet="TotalInventories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TotalRevenue_WeekNo" Association="SapphireDataBaseModel.FK_TotalRevenue_WeekNo">
+      <End Role="WeekNumber" EntitySet="WeekNumbers" />
+      <End Role="TotalRevenue" EntitySet="TotalRevenues" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CNIC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CNIC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="EmployeeSalaries" Relationship="SapphireDataBaseModel.FK_EmployeeSalary_Employee" FromRole="Employee" ToRole="EmployeeSalary" />
+  </EntityType>
+  <EntityType Name="EmployeeSalary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Hours" Type="Int32" />
+    <Property Name="HourlyRate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="EmployeeId" Type="Int32" />
+    <Property Name="WeekId" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Total" Type="Int32" />
+    <NavigationProperty Name="Employee" Relationship="SapphireDataBaseModel.FK_EmployeeSalary_Employee" FromRole="EmployeeSalary" ToRole="Employee" />
+    <NavigationProperty Name="WeekNumber" Relationship="SapphireDataBaseModel.FK_EmployeeSalary_WeekNo" FromRole="EmployeeSalary" ToRole="WeekNumber" />
+  </EntityType>
+  <EntityType Name="ExpenseDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ExpenseTypeId" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Amount" Type="Double" />
+    <Property Name="WeekId" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="ExpenseType" Relationship="SapphireDataBaseModel.FK_ExpenseDetail_ExpenseType" FromRole="ExpenseDetail" ToRole="ExpenseType" />
+    <NavigationProperty Name="WeekNumber" Relationship="SapphireDataBaseModel.FK_ExpenseDetail_WeekNumber" FromRole="ExpenseDetail" ToRole="WeekNumber" />
+  </EntityType>
+  <EntityType Name="ExpenseType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ExpenseDetails" Relationship="SapphireDataBaseModel.FK_ExpenseDetail_ExpenseType" FromRole="ExpenseType" ToRole="ExpenseDetail" />
+  </EntityType>
+  <EntityType Name="Inventory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TotalInventories" Relationship="SapphireDataBaseModel.fk_Inventory_TotalInventory" FromRole="Inventory" ToRole="TotalInventory" />
+    <NavigationProperty Name="InventoryRecords" Relationship="SapphireDataBaseModel.FK_InventoryRecord_Inventory" FromRole="Inventory" ToRole="InventoryRecord" />
+    <NavigationProperty Name="StockCreationHistories" Relationship="SapphireDataBaseModel.FK_StockCreationHistory_Inventory" FromRole="Inventory" ToRole="StockCreationHistory" />
+  </EntityType>
+  <EntityType Name="InventoryRecord">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InventoryId" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Price" Type="Double" />
+    <Property Name="Date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WeekId" Type="Int32" />
+    <Property Name="VenderName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Inventory" Relationship="SapphireDataBaseModel.FK_InventoryRecord_Inventory" FromRole="InventoryRecord" ToRole="Inventory" />
+    <NavigationProperty Name="WeekNumber" Relationship="SapphireDataBaseModel.FK_InventoryRecord_WeekNo" FromRole="InventoryRecord" ToRole="WeekNumber" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderNo" Type="Int32" />
+    <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StockId" Type="Int32" />
+    <Property Name="TotalPrice" Type="Double" />
+    <Property Name="Quantity" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="OrderDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDelivered" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Advance" Type="Double" />
+    <Property Name="RemainingBalance" Type="Double" />
+    <Property Name="WeekId" Type="Int32" />
+    <NavigationProperty Name="Stock" Relationship="SapphireDataBaseModel.FK_Order_Stock" FromRole="Order" ToRole="Stock" />
+    <NavigationProperty Name="WeekNumber" Relationship="SapphireDataBaseModel.FK_Order_Week" FromRole="Order" ToRole="WeekNumber" />
+    <NavigationProperty Name="StockCreationHistories" Relationship="SapphireDataBaseModel.FK_StockCreationHistory_Order" FromRole="Order" ToRole="StockCreationHistory" />
+  </EntityType>
+  <EntityType Name="ProductionCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Stocks" Relationship="SapphireDataBaseModel.FK_Stock_ProductionCategory" FromRole="ProductionCategory" ToRole="Stock" />
+  </EntityType>
+  <EntityType Name="Revenue">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Amount" Type="Double" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="WeekId" Type="Int32" />
+    <NavigationProperty Name="WeekNumber" Relationship="SapphireDataBaseModel.FK_Revenue_WeekNo" FromRole="Revenue" ToRole="WeekNumber" />
+  </EntityType>
+  <EntityType Name="Stock">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductionId" Type="Int32" />
+    <NavigationProperty Name="Orders" Relationship="SapphireDataBaseModel.FK_Order_Stock" FromRole="Stock" ToRole="Order" />
+    <NavigationProperty Name="ProductionCategory" Relationship="SapphireDataBaseModel.FK_Stock_ProductionCategory" FromRole="Stock" ToRole="ProductionCategory" />
+  </EntityType>
+  <EntityType Name="StockCreationHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderId" Type="Int32" />
+    <Property Name="InventoryId" Type="Int32" />
+    <Property Name="QuantityOfInventory" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Inventory" Relationship="SapphireDataBaseModel.FK_StockCreationHistory_Inventory" FromRole="StockCreationHistory" ToRole="Inventory" />
+    <NavigationProperty Name="Order" Relationship="SapphireDataBaseModel.FK_StockCreationHistory_Order" FromRole="StockCreationHistory" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Thekedar">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="CNIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TotalInventory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InventoryId" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Price" Type="Double" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="WeekId" Type="Int32" />
+    <NavigationProperty Name="Inventory" Relationship="SapphireDataBaseModel.fk_Inventory_TotalInventory" FromRole="TotalInventory" ToRole="Inventory" />
+    <NavigationProperty Name="WeekNumber" Relationship="SapphireDataBaseModel.FK_totalInventory_WeekNo" FromRole="TotalInventory" ToRole="WeekNumber" />
+  </EntityType>
+  <EntityType Name="TotalRevenue">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Less" Type="Double" />
+    <Property Name="Add" Type="Double" />
+    <Property Name="PreviousBalance" Type="Double" />
+    <Property Name="CurrentBalance" Type="Double" />
+    <Property Name="WeekId" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="WeekNumber" Relationship="SapphireDataBaseModel.FK_TotalRevenue_WeekNo" FromRole="TotalRevenue" ToRole="WeekNumber" />
+  </EntityType>
+  <EntityType Name="WeekNumber">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WeekNo" Type="Int32" />
+    <NavigationProperty Name="EmployeeSalaries" Relationship="SapphireDataBaseModel.FK_EmployeeSalary_WeekNo" FromRole="WeekNumber" ToRole="EmployeeSalary" />
+    <NavigationProperty Name="ExpenseDetails" Relationship="SapphireDataBaseModel.FK_ExpenseDetail_WeekNumber" FromRole="WeekNumber" ToRole="ExpenseDetail" />
+    <NavigationProperty Name="InventoryRecords" Relationship="SapphireDataBaseModel.FK_InventoryRecord_WeekNo" FromRole="WeekNumber" ToRole="InventoryRecord" />
+    <NavigationProperty Name="Orders" Relationship="SapphireDataBaseModel.FK_Order_Week" FromRole="WeekNumber" ToRole="Order" />
+    <NavigationProperty Name="Revenues" Relationship="SapphireDataBaseModel.FK_Revenue_WeekNo" FromRole="WeekNumber" ToRole="Revenue" />
+    <NavigationProperty Name="TotalInventories" Relationship="SapphireDataBaseModel.FK_totalInventory_WeekNo" FromRole="WeekNumber" ToRole="TotalInventory" />
+    <NavigationProperty Name="TotalRevenues" Relationship="SapphireDataBaseModel.FK_TotalRevenue_WeekNo" FromRole="WeekNumber" ToRole="TotalRevenue" />
+  </EntityType>
+  <Association Name="FK_EmployeeSalary_Employee">
+    <End Type="SapphireDataBaseModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.EmployeeSalary" Role="EmployeeSalary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeSalary">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeSalary_WeekNo">
+    <End Type="SapphireDataBaseModel.WeekNumber" Role="WeekNumber" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.EmployeeSalary" Role="EmployeeSalary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeSalary">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExpenseDetail_ExpenseType">
+    <End Type="SapphireDataBaseModel.ExpenseType" Role="ExpenseType" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.ExpenseDetail" Role="ExpenseDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExpenseType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExpenseDetail">
+        <PropertyRef Name="ExpenseTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExpenseDetail_WeekNumber">
+    <End Type="SapphireDataBaseModel.WeekNumber" Role="WeekNumber" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.ExpenseDetail" Role="ExpenseDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExpenseDetail">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Inventory_TotalInventory">
+    <End Type="SapphireDataBaseModel.Inventory" Role="Inventory" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.TotalInventory" Role="TotalInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TotalInventory">
+        <PropertyRef Name="InventoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InventoryRecord_Inventory">
+    <End Type="SapphireDataBaseModel.Inventory" Role="Inventory" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.InventoryRecord" Role="InventoryRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InventoryRecord">
+        <PropertyRef Name="InventoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockCreationHistory_Inventory">
+    <End Type="SapphireDataBaseModel.Inventory" Role="Inventory" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.StockCreationHistory" Role="StockCreationHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockCreationHistory">
+        <PropertyRef Name="InventoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InventoryRecord_WeekNo">
+    <End Type="SapphireDataBaseModel.WeekNumber" Role="WeekNumber" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.InventoryRecord" Role="InventoryRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InventoryRecord">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Stock">
+    <End Type="SapphireDataBaseModel.Stock" Role="Stock" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stock">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="StockId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Week">
+    <End Type="SapphireDataBaseModel.WeekNumber" Role="WeekNumber" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockCreationHistory_Order">
+    <End Type="SapphireDataBaseModel.Order" Role="Order" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.StockCreationHistory" Role="StockCreationHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockCreationHistory">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stock_ProductionCategory">
+    <End Type="SapphireDataBaseModel.ProductionCategory" Role="ProductionCategory" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.Stock" Role="Stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Stock">
+        <PropertyRef Name="ProductionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Revenue_WeekNo">
+    <End Type="SapphireDataBaseModel.WeekNumber" Role="WeekNumber" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.Revenue" Role="Revenue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Revenue">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_totalInventory_WeekNo">
+    <End Type="SapphireDataBaseModel.WeekNumber" Role="WeekNumber" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.TotalInventory" Role="TotalInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TotalInventory">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TotalRevenue_WeekNo">
+    <End Type="SapphireDataBaseModel.WeekNumber" Role="WeekNumber" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.TotalRevenue" Role="TotalRevenue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TotalRevenue">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

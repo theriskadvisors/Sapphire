@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2e16c92d4bad45d596ec27fdeafb04f1" Name="Diagram1">
+        <EntityTypeShape EntityType="SapphireDataBaseModel.Account" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.Employee" Width="1.5" PointX="3.75" PointY="4" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.EmployeeSalary" Width="1.5" PointX="6" PointY="8.75" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.ExpenseDetail" Width="1.5" PointX="6" PointY="16.875" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.ExpenseType" Width="1.5" PointX="3.75" PointY="17.25" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.Inventory" Width="1.5" PointX="0.75" PointY="8" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.InventoryRecord" Width="1.5" PointX="6" PointY="12.75" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.Order" Width="1.5" PointX="3" PointY="12" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.ProductionCategory" Width="1.5" PointX="1.5" PointY="20.25" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.Revenue" Width="1.5" PointX="3" PointY="29.75" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.Stock" Width="1.5" PointX="0.75" PointY="16.875" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.StockCreationHistory" Width="1.5" PointX="8.25" PointY="12.875" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.Thekedar" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.TotalInventory" Width="1.5" PointX="3" PointY="7.875" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.TotalRevenue" Width="1.5" PointX="3" PointY="32.625" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.WeekNumber" Width="1.5" PointX="0.75" PointY="12.75" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_EmployeeSalary_Employee" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_EmployeeSalary_WeekNo" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_ExpenseDetail_ExpenseType" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_ExpenseDetail_WeekNumber" />
+        <AssociationConnector Association="SapphireDataBaseModel.fk_Inventory_TotalInventory" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_InventoryRecord_Inventory" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_StockCreationHistory_Inventory" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_InventoryRecord_WeekNo" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_Order_Stock" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_Order_Week" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_StockCreationHistory_Order" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_Stock_ProductionCategory" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_Revenue_WeekNo" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_totalInventory_WeekNo" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_TotalRevenue_WeekNo" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
