@@ -152,6 +152,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ThekedarOrders">
+      <EntityTypeMapping TypeName="SapphireDataBaseModel.ThekedarOrder">
+        <MappingFragment StoreEntitySet="ThekedarOrder">
+          <ScalarProperty Name="WeekId" ColumnName="WeekId" />
+          <ScalarProperty Name="RemainingBalance" ColumnName="RemainingBalance" />
+          <ScalarProperty Name="Advance" ColumnName="Advance" />
+          <ScalarProperty Name="IsDelivered" ColumnName="IsDelivered" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="ThekedarId" ColumnName="ThekedarId" />
+          <ScalarProperty Name="StockId" ColumnName="StockId" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="TotalInventories">
       <EntityTypeMapping TypeName="SapphireDataBaseModel.TotalInventory">
         <MappingFragment StoreEntitySet="TotalInventory">
@@ -174,6 +194,15 @@
           <ScalarProperty Name="Add" ColumnName="Add" />
           <ScalarProperty Name="Less" ColumnName="Less" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TotalSalaries">
+      <EntityTypeMapping TypeName="SapphireDataBaseModel.TotalSalary">
+        <MappingFragment StoreEntitySet="TotalSalary">
+          <ScalarProperty Name="WeekId" ColumnName="WeekId" />
+          <ScalarProperty Name="SalarySum" ColumnName="SalarySum" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

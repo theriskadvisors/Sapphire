@@ -17,10 +17,116 @@ namespace WebApplication7.Controllers
         // GET: Revenues
         public ActionResult Index()
         {
-            var revenue = db.Revenues.Include(o => o.WeekNumber);
-            return View(revenue.ToList());
+            ViewBag.WeekId = new SelectList(db.WeekNumbers, "Id", "WeekNo");
+            ViewBag.ExpenseId = new SelectList(db.ExpenseTypes, "Id", "Name");
+            return View();
         }
+        public ActionResult GetAllRevenues()
+        {
+            var revenue = db.Revenues.Select(x => new { x.Id, x.Name,x.Amount,x.WeekNumber.WeekNo }).ToList();
+            var totalrevenue = db.TotalRevenues.Select(x => new { x.Id, x.Name, x.PreviousBalance, x.Less, x.Add, x.CurrentBalance, x.WeekNumber.WeekNo, x.Date }).ToList();
+            var ExpenseType = db.ExpenseTypes.Select(x => new { x.Id, x.Name }).ToList();
+            var ExpenseDetial = db.ExpenseDetails.Select(x => new { x.Id, x.ExpenseType.Name, x.Description, x.Amount, x.Date, x.WeekNumber.WeekNo }).ToList();
+            var result = new { ExpenseDetial,ExpenseType,revenue, totalrevenue };
+            return Json(result,JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult SaveRevenue()
+        {
+            var dbTransaction = db.Database.BeginTransaction();
+            var name = Request.Form["Name"];
+            var amount = Request.Form["Amount"];
+            var date = Request.Form["Date"];
+            var weekid = Request.Form["WeekId"];
 
+            //Revenue Type//
+            Revenue rev = new Revenue();
+            rev.Name = name;
+            rev.Amount =Int32.Parse(amount);
+            rev.Date = Convert.ToDateTime(date);
+            rev.WeekId =Int32.Parse(weekid);
+            db.Revenues.Add(rev);
+            db.SaveChanges();
+
+            //Total Revenue//
+
+            TotalRevenue tr = new TotalRevenue();
+            var totalrev = db.TotalRevenues.OrderByDescending(y => y.Id).FirstOrDefault();
+            tr.Name =name;
+            tr.Add = Int32.Parse(amount);
+            tr.Less = 0;
+            if (totalrev == null)
+            {
+                tr.PreviousBalance = 0;
+                tr.CurrentBalance = 0;
+            }
+            else
+            {
+                tr.PreviousBalance = totalrev.CurrentBalance;
+                tr.CurrentBalance = totalrev.CurrentBalance;
+            }
+            tr.CurrentBalance += Int32.Parse(amount);
+            tr.Date = Convert.ToDateTime(date);
+            tr.WeekId = Int32.Parse(weekid);
+            db.TotalRevenues.Add(tr);
+            db.SaveChanges();
+            dbTransaction.Commit();
+
+            return RedirectToAction("Index", "Revenues");
+        }
+        public ActionResult SaveExpenseType()
+        {
+            var name = Request.Form["Name"];
+            ExpenseType exp = new  ExpenseType();
+            exp.Name = name;
+            db.ExpenseTypes.Add(exp);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Revenues");
+        }
+        public ActionResult SaveExpenseDetails()
+        {
+            var dbTransaction = db.Database.BeginTransaction();
+            var expenseId = Request.Form["ExpenseId"];
+            var amount = Request.Form["Amount"];
+            var Description = Request.Form["Description"];
+            var date = Request.Form["Date"];
+            var weekid = Request.Form["WeekId"];
+
+            //Expense Details//
+            ExpenseDetail rev = new  ExpenseDetail();
+            rev.ExpenseTypeId = Int32.Parse(expenseId);
+            rev.Amount = Int32.Parse(amount);
+            rev.Date = Convert.ToDateTime(date);
+            rev.WeekId = Int32.Parse(weekid);
+            db.ExpenseDetails.Add(rev);
+            db.SaveChanges();
+
+            //Total Revenue//
+            TotalRevenue tr = new TotalRevenue();
+            var totalrev = db.TotalRevenues.OrderByDescending(y => y.Id).FirstOrDefault();
+            var expType = db.ExpenseTypes.Where(x => x.Id == rev.ExpenseTypeId).Select(x => x.Name).FirstOrDefault();
+            tr.Name = expType;
+            tr.Add = 0;
+            tr.Less = Int32.Parse(amount); ;
+            if (totalrev == null)
+            {
+                tr.PreviousBalance = 0;
+                tr.CurrentBalance = 0;
+            }
+            else
+            {
+                tr.PreviousBalance = totalrev.CurrentBalance;
+                tr.CurrentBalance = totalrev.CurrentBalance;
+            }
+            tr.CurrentBalance -= Int32.Parse(amount);
+            tr.Date = Convert.ToDateTime(date);
+            tr.WeekId = Int32.Parse(weekid);
+            db.TotalRevenues.Add(tr);
+            db.SaveChanges();
+            dbTransaction.Commit();
+
+
+            return RedirectToAction("Index", "Revenues");
+        }
         // GET: Revenues/Details/5
         public ActionResult Details(int? id)
         {

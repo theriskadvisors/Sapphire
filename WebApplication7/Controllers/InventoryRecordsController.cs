@@ -80,7 +80,7 @@ namespace WebApplication7.Controllers
                 tr.Name = inventorytype;
                 tr.Add = 0;
                 tr.Less = inventoryRecord.Price;
-                if (totalrev.CurrentBalance == null)
+                if (totalrev == null)
                 {
                     tr.PreviousBalance = 0;
                     tr.CurrentBalance = 0;

@@ -14,8 +14,10 @@
     <EntitySet Name="Stocks" EntityType="SapphireDataBaseModel.Stock" />
     <EntitySet Name="StockCreationHistories" EntityType="SapphireDataBaseModel.StockCreationHistory" />
     <EntitySet Name="Thekedars" EntityType="SapphireDataBaseModel.Thekedar" />
+    <EntitySet Name="ThekedarOrders" EntityType="SapphireDataBaseModel.ThekedarOrder" />
     <EntitySet Name="TotalInventories" EntityType="SapphireDataBaseModel.TotalInventory" />
     <EntitySet Name="TotalRevenues" EntityType="SapphireDataBaseModel.TotalRevenue" />
+    <EntitySet Name="TotalSalaries" EntityType="SapphireDataBaseModel.TotalSalary" />
     <EntitySet Name="WeekNumbers" EntityType="SapphireDataBaseModel.WeekNumber" />
     <AssociationSet Name="FK_EmployeeSalary_Employee" Association="SapphireDataBaseModel.FK_EmployeeSalary_Employee">
       <End Role="Employee" EntitySet="Employees" />
@@ -69,6 +71,18 @@
       <End Role="WeekNumber" EntitySet="WeekNumbers" />
       <End Role="Revenue" EntitySet="Revenues" />
     </AssociationSet>
+    <AssociationSet Name="FK_ThekedarOrder_Stock" Association="SapphireDataBaseModel.FK_ThekedarOrder_Stock">
+      <End Role="Stock" EntitySet="Stocks" />
+      <End Role="ThekedarOrder" EntitySet="ThekedarOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ThekedarOrder_Thekedar" Association="SapphireDataBaseModel.FK_ThekedarOrder_Thekedar">
+      <End Role="Thekedar" EntitySet="Thekedars" />
+      <End Role="ThekedarOrder" EntitySet="ThekedarOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ThekedarOrder_Week" Association="SapphireDataBaseModel.FK_ThekedarOrder_Week">
+      <End Role="WeekNumber" EntitySet="WeekNumbers" />
+      <End Role="ThekedarOrder" EntitySet="ThekedarOrders" />
+    </AssociationSet>
     <AssociationSet Name="FK_totalInventory_WeekNo" Association="SapphireDataBaseModel.FK_totalInventory_WeekNo">
       <End Role="WeekNumber" EntitySet="WeekNumbers" />
       <End Role="TotalInventory" EntitySet="TotalInventories" />
@@ -76,6 +90,10 @@
     <AssociationSet Name="FK_TotalRevenue_WeekNo" Association="SapphireDataBaseModel.FK_TotalRevenue_WeekNo">
       <End Role="WeekNumber" EntitySet="WeekNumbers" />
       <End Role="TotalRevenue" EntitySet="TotalRevenues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TotalSalary_WeekNo" Association="SapphireDataBaseModel.FK_TotalSalary_WeekNo">
+      <End Role="WeekNumber" EntitySet="WeekNumbers" />
+      <End Role="TotalSalary" EntitySet="TotalSalaries" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Account">
@@ -213,6 +231,7 @@
     <Property Name="ProductionId" Type="Int32" />
     <NavigationProperty Name="Orders" Relationship="SapphireDataBaseModel.FK_Order_Stock" FromRole="Stock" ToRole="Order" />
     <NavigationProperty Name="ProductionCategory" Relationship="SapphireDataBaseModel.FK_Stock_ProductionCategory" FromRole="Stock" ToRole="ProductionCategory" />
+    <NavigationProperty Name="ThekedarOrders" Relationship="SapphireDataBaseModel.FK_ThekedarOrder_Stock" FromRole="Stock" ToRole="ThekedarOrder" />
   </EntityType>
   <EntityType Name="StockCreationHistory">
     <Key>
@@ -235,6 +254,29 @@
     <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Address" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
     <Property Name="CNIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ThekedarOrders" Relationship="SapphireDataBaseModel.FK_ThekedarOrder_Thekedar" FromRole="Thekedar" ToRole="ThekedarOrder" />
+  </EntityType>
+  <EntityType Name="ThekedarOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderNo" Type="Int32" />
+    <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StockId" Type="Int32" />
+    <Property Name="ThekedarId" Type="Int32" />
+    <Property Name="TotalPrice" Type="Double" />
+    <Property Name="Quantity" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="OrderDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDelivered" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Advance" Type="Double" />
+    <Property Name="RemainingBalance" Type="Double" />
+    <Property Name="WeekId" Type="Int32" />
+    <NavigationProperty Name="Stock" Relationship="SapphireDataBaseModel.FK_ThekedarOrder_Stock" FromRole="ThekedarOrder" ToRole="Stock" />
+    <NavigationProperty Name="Thekedar" Relationship="SapphireDataBaseModel.FK_ThekedarOrder_Thekedar" FromRole="ThekedarOrder" ToRole="Thekedar" />
+    <NavigationProperty Name="WeekNumber" Relationship="SapphireDataBaseModel.FK_ThekedarOrder_Week" FromRole="ThekedarOrder" ToRole="WeekNumber" />
   </EntityType>
   <EntityType Name="TotalInventory">
     <Key>
@@ -263,6 +305,15 @@
     <Property Name="Date" Type="DateTime" Precision="0" />
     <NavigationProperty Name="WeekNumber" Relationship="SapphireDataBaseModel.FK_TotalRevenue_WeekNo" FromRole="TotalRevenue" ToRole="WeekNumber" />
   </EntityType>
+  <EntityType Name="TotalSalary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SalarySum" Type="Double" />
+    <Property Name="WeekId" Type="Int32" />
+    <NavigationProperty Name="WeekNumber" Relationship="SapphireDataBaseModel.FK_TotalSalary_WeekNo" FromRole="TotalSalary" ToRole="WeekNumber" />
+  </EntityType>
   <EntityType Name="WeekNumber">
     <Key>
       <PropertyRef Name="Id" />
@@ -274,8 +325,10 @@
     <NavigationProperty Name="InventoryRecords" Relationship="SapphireDataBaseModel.FK_InventoryRecord_WeekNo" FromRole="WeekNumber" ToRole="InventoryRecord" />
     <NavigationProperty Name="Orders" Relationship="SapphireDataBaseModel.FK_Order_Week" FromRole="WeekNumber" ToRole="Order" />
     <NavigationProperty Name="Revenues" Relationship="SapphireDataBaseModel.FK_Revenue_WeekNo" FromRole="WeekNumber" ToRole="Revenue" />
+    <NavigationProperty Name="ThekedarOrders" Relationship="SapphireDataBaseModel.FK_ThekedarOrder_Week" FromRole="WeekNumber" ToRole="ThekedarOrder" />
     <NavigationProperty Name="TotalInventories" Relationship="SapphireDataBaseModel.FK_totalInventory_WeekNo" FromRole="WeekNumber" ToRole="TotalInventory" />
     <NavigationProperty Name="TotalRevenues" Relationship="SapphireDataBaseModel.FK_TotalRevenue_WeekNo" FromRole="WeekNumber" ToRole="TotalRevenue" />
+    <NavigationProperty Name="TotalSalaries" Relationship="SapphireDataBaseModel.FK_TotalSalary_WeekNo" FromRole="WeekNumber" ToRole="TotalSalary" />
   </EntityType>
   <Association Name="FK_EmployeeSalary_Employee">
     <End Type="SapphireDataBaseModel.Employee" Role="Employee" Multiplicity="0..1" />
@@ -433,6 +486,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ThekedarOrder_Stock">
+    <End Type="SapphireDataBaseModel.Stock" Role="Stock" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.ThekedarOrder" Role="ThekedarOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stock">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ThekedarOrder">
+        <PropertyRef Name="StockId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ThekedarOrder_Thekedar">
+    <End Type="SapphireDataBaseModel.Thekedar" Role="Thekedar" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.ThekedarOrder" Role="ThekedarOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Thekedar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ThekedarOrder">
+        <PropertyRef Name="ThekedarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ThekedarOrder_Week">
+    <End Type="SapphireDataBaseModel.WeekNumber" Role="WeekNumber" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.ThekedarOrder" Role="ThekedarOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ThekedarOrder">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_totalInventory_WeekNo">
     <End Type="SapphireDataBaseModel.WeekNumber" Role="WeekNumber" Multiplicity="0..1" />
     <End Type="SapphireDataBaseModel.TotalInventory" Role="TotalInventory" Multiplicity="*" />
@@ -453,6 +542,18 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="TotalRevenue">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TotalSalary_WeekNo">
+    <End Type="SapphireDataBaseModel.WeekNumber" Role="WeekNumber" Multiplicity="0..1" />
+    <End Type="SapphireDataBaseModel.TotalSalary" Role="TotalSalary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TotalSalary">
         <PropertyRef Name="WeekId" />
       </Dependent>
     </ReferentialConstraint>

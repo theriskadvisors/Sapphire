@@ -22,8 +22,10 @@ namespace WebApplication7.Models
             this.InventoryRecords = new HashSet<InventoryRecord>();
             this.Orders = new HashSet<Order>();
             this.Revenues = new HashSet<Revenue>();
+            this.ThekedarOrders = new HashSet<ThekedarOrder>();
             this.TotalInventories = new HashSet<TotalInventory>();
             this.TotalRevenues = new HashSet<TotalRevenue>();
+            this.TotalSalaries = new HashSet<TotalSalary>();
         }
     
         public int Id { get; set; }
@@ -40,8 +42,12 @@ namespace WebApplication7.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Revenue> Revenues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ThekedarOrder> ThekedarOrders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TotalInventory> TotalInventories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TotalRevenue> TotalRevenues { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TotalSalary> TotalSalaries { get; set; }
     }
 }

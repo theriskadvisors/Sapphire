@@ -96,6 +96,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\black bridal dress.jpg" />
+    <Content Include="Content\images\bridal4ingae.jpg" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\demo-page.css" />
     <Content Include="Content\css\examples.css" />
@@ -110,11 +112,17 @@
     <Content Include="Content\images\1.jpg" />
     <Content Include="Content\images\404.png" />
     <Content Include="Content\images\b3.png" />
+    <Content Include="Content\images\b46-popular-styles-of-pakistani-bridal-dresses.jpg" />
     <Content Include="Content\images\bg2.jpg" />
-    <Content Include="Content\images\climate.jpg" />
+    <Content Include="Content\images\bridal wear.jpg" />
+    <Content Include="Content\images\bridal.jpg" />
+    <Content Include="Content\images\brown.jpg" />
     <Content Include="Content\images\close.png" />
+    <Content Include="Content\images\forma 4imgaes.jpg" />
     <Content Include="Content\images\ftr-icons.png" />
     <Content Include="Content\images\icon.png" />
+    <Content Include="Content\images\lawn.jpg" />
+    <Content Include="Content\images\lawn1.jpg" />
     <Content Include="Content\images\login.jpg" />
     <Content Include="Content\images\mess.png" />
     <Content Include="Content\images\next.png" />
@@ -126,6 +134,9 @@
     <Content Include="Content\images\p6.png" />
     <Content Include="Content\images\p7.png" />
     <Content Include="Content\images\p8.png" />
+    <Content Include="Content\images\pret %282%29.jpg" />
+    <Content Include="Content\images\pret square.jpg" />
+    <Content Include="Content\images\pret.jpg" />
     <Content Include="Content\images\prev.png" />
     <Content Include="Content\images\pro1.jpg" />
     <Content Include="Content\images\pro10.jpg" />
@@ -139,9 +150,13 @@
     <Content Include="Content\images\pro8.jpg" />
     <Content Include="Content\images\pro9.jpg" />
     <Content Include="Content\images\reg.png" />
+    <Content Include="Content\images\s1cropped.jpg" />
+    <Content Include="Content\images\s2 croped.jpg" />
+    <Content Include="Content\images\s2.jpg" />
     <Content Include="Content\images\search.png" />
     <Content Include="Content\images\shoppy.jpg" />
     <Content Include="Content\images\tick.png" />
+    <Content Include="Content\images\urwa black.jpg" />
     <Content Include="Content\images\user.jpg" />
     <Content Include="Content\images\visit.png" />
     <Content Include="Content\js\bars.js" />
@@ -156,6 +171,7 @@
     <Content Include="Content\js\nivo-lightbox.min.js" />
     <Content Include="Content\js\scripts.js" />
     <Content Include="Content\js\skycons.js" />
+    <Content Include="Content\images\s1.jpg" />
     <Content Include="Content\style.css" />
     <Content Include="Global.asax" />
     <Content Include="Models\SapphireModel.Context.tt">
@@ -193,6 +209,7 @@
     <Compile Include="Controllers\RevenuesController.cs" />
     <Compile Include="Controllers\StockCreationHistoriesController.cs" />
     <Compile Include="Controllers\StocksController.cs" />
+    <Compile Include="Controllers\ThekedarOrdersController.cs" />
     <Compile Include="Controllers\ThekedarsController.cs" />
     <Compile Include="Controllers\TotalInventoryController.cs" />
     <Compile Include="Controllers\TotalRevenuesController.cs" />
@@ -253,10 +270,16 @@
     <Compile Include="Models\Thekedar.cs">
       <DependentUpon>SapphireModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ThekedarOrder.cs">
+      <DependentUpon>SapphireModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TotalInventory.cs">
       <DependentUpon>SapphireModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TotalRevenue.cs">
+      <DependentUpon>SapphireModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TotalSalary.cs">
       <DependentUpon>SapphireModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WeekNumber.cs">
@@ -354,6 +377,11 @@
     <Content Include="Views\TotalRevenues\Details.cshtml" />
     <Content Include="Views\TotalRevenues\Edit.cshtml" />
     <Content Include="Views\TotalRevenues\Index.cshtml" />
+    <Content Include="Views\ThekedarOrders\Create.cshtml" />
+    <Content Include="Views\ThekedarOrders\Delete.cshtml" />
+    <Content Include="Views\ThekedarOrders\Details.cshtml" />
+    <Content Include="Views\ThekedarOrders\Edit.cshtml" />
+    <Content Include="Views\ThekedarOrders\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

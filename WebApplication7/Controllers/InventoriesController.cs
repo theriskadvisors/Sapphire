@@ -17,7 +17,9 @@ namespace WebApplication7.Controllers
         // GET: Inventories
         public ActionResult Index()
         {
-            return View(db.Inventories.ToList());
+            ViewBag.InventoryId = new SelectList(db.Inventories, "Id", "Name");
+            ViewBag.WeekId = new SelectList(db.WeekNumbers, "Id", "WeekNo");
+            return View();
         }
 
         // GET: Inventories/Details/5
@@ -34,13 +36,97 @@ namespace WebApplication7.Controllers
             }
             return View(inventory);
         }
-
+        public ActionResult GetAllInventories()
+        {
+            var inventorylist = db.Inventories.Select(x => new { x.Id, x.Name, x.Description }).ToList();
+            var inven_rec_list = db.InventoryRecords.Select(x => new { x.Id, x.Inventory.Name, x.Quantity, x.Price, x.Date, x.WeekNumber.WeekNo, x.VenderName }).ToList();
+            var totalinventory = db.TotalInventories.Select(x => new { x.Id, x.Inventory.Name, x.Quantity, x.Price, x.Date,}).ToList();
+            var result = new { inventorylist, inven_rec_list, totalinventory };
+            return Json(result,JsonRequestBehavior.AllowGet);
+        }
+     
         // GET: Inventories/Create
         public ActionResult Create()
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult SaveInventoryType()
+        {
+            var name = Request.Form["FullName"];
+            var desc = Request.Form["Description"];
+            Inventory inventory = new Inventory();
+            inventory.Name = name;
+            inventory.Description = desc;
+            db.Inventories.Add(inventory);
+            db.SaveChanges();
+            return RedirectToAction("Index","Inventories");
+        }
 
+        [HttpPost]
+        public ActionResult SaveInventoryRecord()
+        {
+            var dbTransaction = db.Database.BeginTransaction();
+            var inventory = Request.Form["InventoryId"];
+            var qty = Request.Form["Quantity"];
+            var price = Request.Form["Price"];
+            var date = Request.Form["Date"];
+            var vendername = Request.Form["VenderName"];
+            var weekid = Request.Form["WeekId"];
+            //Inventory Record//
+            InventoryRecord inventoryrec = new  InventoryRecord();
+            inventoryrec.InventoryId=Int32.Parse(inventory);
+            inventoryrec.Quantity = Int32.Parse(qty);
+            inventoryrec.Price = Int32.Parse(price);
+            inventoryrec.Date = date;
+            inventoryrec.VenderName = vendername;
+            inventoryrec.WeekId =Int32.Parse(weekid);
+            db.InventoryRecords.Add(inventoryrec);
+            db.SaveChanges();
+            //Total Inventory//
+            var totalInventoryId = db.TotalInventories.Where(x => x.InventoryId == inventoryrec.InventoryId).Select(x => x.InventoryId).FirstOrDefault();
+            if (totalInventoryId != null)
+            {
+                TotalInventory total_Inventory = db.TotalInventories.Where(x => x.InventoryId == totalInventoryId).FirstOrDefault();
+                total_Inventory.Quantity += Int32.Parse(qty);
+                total_Inventory.Price += Int32.Parse(price);
+                db.SaveChanges();
+            }
+            else
+            {
+                TotalInventory totalInventory = new TotalInventory();
+                totalInventory.InventoryId = Int32.Parse(inventory);
+                totalInventory.Quantity = Int32.Parse(qty);
+                totalInventory.Price = Int32.Parse(price);
+                db.TotalInventories.Add(totalInventory);
+                db.SaveChanges();
+            }
+
+            //Total Revenue//
+            var totalrev = db.TotalRevenues.OrderByDescending(y => y.Id).FirstOrDefault();
+            TotalRevenue tr = new TotalRevenue();
+            var inventorytype = db.Inventories.Where(x => x.Id == inventoryrec.InventoryId).Select(x => x.Name).FirstOrDefault();
+            tr.Name = inventorytype;
+            tr.Add = 0;
+            tr.Less = Int32.Parse(price);
+            if (totalrev == null)
+            {
+                tr.PreviousBalance = 0;
+                tr.CurrentBalance = 0;
+            }
+            else
+            {
+                tr.PreviousBalance = totalrev.CurrentBalance;
+                tr.CurrentBalance = totalrev.CurrentBalance;
+            }
+            tr.CurrentBalance -= Int32.Parse(price);
+            tr.Date = DateTime.Now;
+            tr.WeekId = Int32.Parse(weekid);
+            db.TotalRevenues.Add(tr);
+            db.SaveChanges();
+            dbTransaction.Commit();
+            return RedirectToAction("Index", "Inventories");
+        }
         // POST: Inventories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.

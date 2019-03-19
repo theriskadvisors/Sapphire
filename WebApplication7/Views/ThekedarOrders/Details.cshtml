@@ -1,0 +1,123 @@
+﻿@model WebApplication7.Models.ThekedarOrder
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ThekedarOrder</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDelivered)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDelivered)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Advance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Advance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RemainingBalance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RemainingBalance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Stock.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stock.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Thekedar.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Thekedar.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeekNumber.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeekNumber.Id)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

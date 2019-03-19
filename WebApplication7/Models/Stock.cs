@@ -18,6 +18,7 @@ namespace WebApplication7.Models
         public Stock()
         {
             this.Orders = new HashSet<Order>();
+            this.ThekedarOrders = new HashSet<ThekedarOrder>();
         }
     
         public int Id { get; set; }
@@ -29,5 +30,7 @@ namespace WebApplication7.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ProductionCategory ProductionCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ThekedarOrder> ThekedarOrders { get; set; }
     }
 }

@@ -6,21 +6,23 @@
     <edmx:Diagrams>
       <Diagram DiagramId="2e16c92d4bad45d596ec27fdeafb04f1" Name="Diagram1">
         <EntityTypeShape EntityType="SapphireDataBaseModel.Account" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.Employee" Width="1.5" PointX="3.75" PointY="4" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.EmployeeSalary" Width="1.5" PointX="6" PointY="8.75" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.ExpenseDetail" Width="1.5" PointX="6" PointY="16.875" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.ExpenseType" Width="1.5" PointX="3.75" PointY="17.25" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.Inventory" Width="1.5" PointX="0.75" PointY="8" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.InventoryRecord" Width="1.5" PointX="6" PointY="12.75" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.Order" Width="1.5" PointX="3" PointY="12" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.ProductionCategory" Width="1.5" PointX="1.5" PointY="20.25" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.Revenue" Width="1.5" PointX="3" PointY="29.75" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.Stock" Width="1.5" PointX="0.75" PointY="16.875" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.StockCreationHistory" Width="1.5" PointX="8.25" PointY="12.875" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.Thekedar" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.TotalInventory" Width="1.5" PointX="3" PointY="7.875" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.TotalRevenue" Width="1.5" PointX="3" PointY="32.625" />
-        <EntityTypeShape EntityType="SapphireDataBaseModel.WeekNumber" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.Employee" Width="1.5" PointX="0.75" PointY="21.125" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.EmployeeSalary" Width="1.5" PointX="3" PointY="16.875" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.ExpenseDetail" Width="1.5" PointX="3" PointY="13" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.ExpenseType" Width="1.5" PointX="0.75" PointY="13.5" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.Inventory" Width="1.5" PointX="3.75" PointY="9.125" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.InventoryRecord" Width="1.5" PointX="6" PointY="16.875" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.Order" Width="1.5" PointX="3" PointY="21.25" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.ProductionCategory" Width="1.5" PointX="1.5" PointY="32.5" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.Revenue" Width="1.5" PointX="3" PointY="43.75" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.Stock" Width="1.5" PointX="0.75" PointY="25" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.StockCreationHistory" Width="1.5" PointX="8.25" PointY="22.125" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.Thekedar" Width="1.5" PointX="3.75" PointY="26.125" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.ThekedarOrder" Width="1.5" PointX="6" PointY="21.125" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.TotalInventory" Width="1.5" PointX="6" PointY="13" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.TotalRevenue" Width="1.5" PointX="3" PointY="40.25" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.TotalSalary" Width="1.5" PointX="3" PointY="29.25" />
+        <EntityTypeShape EntityType="SapphireDataBaseModel.WeekNumber" Width="1.5" PointX="0.75" PointY="16.75" />
         <AssociationConnector Association="SapphireDataBaseModel.FK_EmployeeSalary_Employee" />
         <AssociationConnector Association="SapphireDataBaseModel.FK_EmployeeSalary_WeekNo" />
         <AssociationConnector Association="SapphireDataBaseModel.FK_ExpenseDetail_ExpenseType" />
@@ -34,8 +36,12 @@
         <AssociationConnector Association="SapphireDataBaseModel.FK_StockCreationHistory_Order" />
         <AssociationConnector Association="SapphireDataBaseModel.FK_Stock_ProductionCategory" />
         <AssociationConnector Association="SapphireDataBaseModel.FK_Revenue_WeekNo" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_ThekedarOrder_Stock" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_ThekedarOrder_Thekedar" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_ThekedarOrder_Week" />
         <AssociationConnector Association="SapphireDataBaseModel.FK_totalInventory_WeekNo" />
         <AssociationConnector Association="SapphireDataBaseModel.FK_TotalRevenue_WeekNo" />
+        <AssociationConnector Association="SapphireDataBaseModel.FK_TotalSalary_WeekNo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -17,9 +17,20 @@ namespace WebApplication7.Controllers
         // GET: Thekedars
         public ActionResult Index()
         {
-            return View(db.Thekedars.ToList());
+            ViewBag.WeekId = new SelectList(db.WeekNumbers, "Id", "WeekNo");
+            return View();
         }
-
+        public ActionResult GetAllEmployees()
+        {
+            var thekedarlist = db.Thekedars.Select(x => new { x.Id, x.Name, x.PhoneNumber, x.CNIC, x.Address }).ToList();
+            var Employeelist = db.Employees.Select(x => new { x.Id, x.Name, x.PhoneNumber, x.CNIC, x.Address }).ToList();
+            var Salarylist = db.EmployeeSalaries.Select(x => new { x.Id, x.Employee.Name, x.Total, x.Date, x.WeekNumber.WeekNo }).ToList();
+            /////EmployeeSalary List
+            var employeenames = db.Employees.Select(x => x.Name).ToList();
+            var weekno = db.WeekNumbers.Select(x => x.WeekNo).OrderByDescending(y => y).FirstOrDefault();
+            var result = new { thekedarlist, Employeelist, Salarylist, employeenames, weekno };
+            return Json(result,JsonRequestBehavior.AllowGet);
+        }
         // GET: Thekedars/Details/5
         public ActionResult Details(int? id)
         {
@@ -40,7 +51,91 @@ namespace WebApplication7.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult SaveEmployees()
+        {
+            var name = Request.Form["FullName"];
+            var phone = Request.Form["Phone"];
+            var cnic = Request.Form["CNIC"];
+            var address = Request.Form["Address"];
 
+            Employee employee = new Employee();
+            employee.Name = name;
+            employee.PhoneNumber = phone;
+            employee.CNIC = cnic;
+            employee.Address = address;
+            db.Employees.Add(employee);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Thekedars");
+        }
+        [HttpPost]
+        public ActionResult SaveThekedars()
+        {
+            var name = Request.Form["FullName"];
+            var phone = Request.Form["Phone"];
+            var cnic = Request.Form["CNIC"];
+            var address = Request.Form["Address"];
+
+            Thekedar thekedar = new Thekedar();
+            thekedar.Name = name;
+            thekedar.PhoneNumber = phone;
+            thekedar.CNIC = cnic;
+            thekedar.Address = address;
+            db.Thekedars.Add(thekedar);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Thekedars");
+        }
+        public JsonResult SaveSalary(SalaryDetail SalaryDetail)
+        {
+            var emp = db.Employees.Where(x => x.Name == SalaryDetail.Name).Select(x => x.Id).FirstOrDefault();
+            var sal = db.EmployeeSalaries.Where(x => x.EmployeeId == emp && x.WeekId == SalaryDetail.Week).FirstOrDefault();
+            var result = "True";
+            if (sal == null)
+            {
+                EmployeeSalary employeeSalary = new EmployeeSalary();
+                employeeSalary.EmployeeId = emp;
+                employeeSalary.WeekId = SalaryDetail.Week;
+                employeeSalary.Hours = SalaryDetail.Hours;
+                employeeSalary.HourlyRate = SalaryDetail.HourlyRate;
+                employeeSalary.Date = SalaryDetail.Date;
+                employeeSalary.Total = SalaryDetail.Total;
+                db.EmployeeSalaries.Add(employeeSalary);
+                db.SaveChanges();
+
+                var flag = db.TotalSalaries.Where(x => x.WeekId == SalaryDetail.Week).FirstOrDefault();
+                if(flag==null)
+                {
+                    TotalSalary TotalSalary = new TotalSalary();
+                    TotalSalary.SalarySum = SalaryDetail.Total;
+                    TotalSalary.WeekId = SalaryDetail.Week;
+                    db.TotalSalaries.Add(TotalSalary);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    TotalSalary TotalSalary = db.TotalSalaries.Where(x => x.WeekId == SalaryDetail.Week).FirstOrDefault();
+                    TotalSalary.SalarySum += SalaryDetail.Total;
+                    db.SaveChanges();
+                }
+               
+
+            }
+            else
+            {
+                result = "False";
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public class SalaryDetail
+        {
+            public string Name { get; set; }
+            public int Hours { get; set; }
+            public string HourlyRate { get; set; }
+            public DateTime Date { get; set; }
+            public int Week { get; set; }
+            public int Total { get; set; }
+
+        }
         // POST: Thekedars/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.

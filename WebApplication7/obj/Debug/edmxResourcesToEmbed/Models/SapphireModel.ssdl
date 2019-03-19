@@ -138,6 +138,25 @@
     <Property Name="Address" Type="varchar" MaxLength="75" />
     <Property Name="CNIC" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="ThekedarOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderNo" Type="int" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="50" />
+    <Property Name="StockId" Type="int" />
+    <Property Name="ThekedarId" Type="int" />
+    <Property Name="TotalPrice" Type="float" />
+    <Property Name="Quantity" Type="nchar" MaxLength="10" />
+    <Property Name="OrderDate" Type="nvarchar" MaxLength="50" />
+    <Property Name="DeliveryDate" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsDelivered" Type="nvarchar" MaxLength="50" />
+    <Property Name="Advance" Type="float" />
+    <Property Name="RemainingBalance" Type="float" />
+    <Property Name="WeekId" Type="int" />
+  </EntityType>
   <EntityType Name="TotalInventory">
     <Key>
       <PropertyRef Name="Id" />
@@ -161,6 +180,14 @@
     <Property Name="CurrentBalance" Type="float" />
     <Property Name="WeekId" Type="int" />
     <Property Name="Date" Type="date" />
+  </EntityType>
+  <EntityType Name="TotalSalary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SalarySum" Type="float" />
+    <Property Name="WeekId" Type="int" />
   </EntityType>
   <EntityType Name="WeekNumber">
     <Key>
@@ -325,6 +352,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ThekedarOrder_Stock">
+    <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+    <End Role="ThekedarOrder" Type="Self.ThekedarOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stock">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ThekedarOrder">
+        <PropertyRef Name="StockId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ThekedarOrder_Thekedar">
+    <End Role="Thekedar" Type="Self.Thekedar" Multiplicity="0..1" />
+    <End Role="ThekedarOrder" Type="Self.ThekedarOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Thekedar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ThekedarOrder">
+        <PropertyRef Name="ThekedarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ThekedarOrder_Week">
+    <End Role="WeekNumber" Type="Self.WeekNumber" Multiplicity="0..1" />
+    <End Role="ThekedarOrder" Type="Self.ThekedarOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ThekedarOrder">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_totalInventory_WeekNo">
     <End Role="WeekNumber" Type="Self.WeekNumber" Multiplicity="0..1" />
     <End Role="TotalInventory" Type="Self.TotalInventory" Multiplicity="*" />
@@ -349,6 +412,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TotalSalary_WeekNo">
+    <End Role="WeekNumber" Type="Self.WeekNumber" Multiplicity="0..1" />
+    <End Role="TotalSalary" Type="Self.TotalSalary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekNumber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TotalSalary">
+        <PropertyRef Name="WeekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="SapphireDataBaseModelStoreContainer">
     <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
@@ -363,8 +438,10 @@
     <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StockCreationHistory" EntityType="Self.StockCreationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Thekedar" EntityType="Self.Thekedar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ThekedarOrder" EntityType="Self.ThekedarOrder" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TotalInventory" EntityType="Self.TotalInventory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TotalRevenue" EntityType="Self.TotalRevenue" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TotalSalary" EntityType="Self.TotalSalary" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WeekNumber" EntityType="Self.WeekNumber" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_EmployeeSalary_Employee" Association="Self.FK_EmployeeSalary_Employee">
       <End Role="Employee" EntitySet="Employee" />
@@ -418,6 +495,18 @@
       <End Role="Order" EntitySet="Order" />
       <End Role="StockCreationHistory" EntitySet="StockCreationHistory" />
     </AssociationSet>
+    <AssociationSet Name="FK_ThekedarOrder_Stock" Association="Self.FK_ThekedarOrder_Stock">
+      <End Role="Stock" EntitySet="Stock" />
+      <End Role="ThekedarOrder" EntitySet="ThekedarOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ThekedarOrder_Thekedar" Association="Self.FK_ThekedarOrder_Thekedar">
+      <End Role="Thekedar" EntitySet="Thekedar" />
+      <End Role="ThekedarOrder" EntitySet="ThekedarOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ThekedarOrder_Week" Association="Self.FK_ThekedarOrder_Week">
+      <End Role="WeekNumber" EntitySet="WeekNumber" />
+      <End Role="ThekedarOrder" EntitySet="ThekedarOrder" />
+    </AssociationSet>
     <AssociationSet Name="FK_totalInventory_WeekNo" Association="Self.FK_totalInventory_WeekNo">
       <End Role="WeekNumber" EntitySet="WeekNumber" />
       <End Role="TotalInventory" EntitySet="TotalInventory" />
@@ -425,6 +514,10 @@
     <AssociationSet Name="FK_TotalRevenue_WeekNo" Association="Self.FK_TotalRevenue_WeekNo">
       <End Role="WeekNumber" EntitySet="WeekNumber" />
       <End Role="TotalRevenue" EntitySet="TotalRevenue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TotalSalary_WeekNo" Association="Self.FK_TotalSalary_WeekNo">
+      <End Role="WeekNumber" EntitySet="WeekNumber" />
+      <End Role="TotalSalary" EntitySet="TotalSalary" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

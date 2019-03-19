@@ -1,58 +1,87 @@
 ﻿<!DOCTYPE html>
+<style>
+    .navbar a:hover {
+        background-color: transparent !important;
+        color: #dbae1e;
+        border-bottom: 4px solid white;
+    }
+    .navbar a:focus {
+        background-color: transparent !important;
+        color: #dbae1e;
+        border-bottom: 4px solid white;
+    }
+</style>
 <html>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <body>
     <div class="navbar">
-        <a class="col-md-offset-1" href="/Home/Index">Home</a>
+        <a class="col-md-1" href="/Home/Index">Home</a>
         <a href="/ProductionCategories/Index">Production Category</a>
+        <a href="/Thekedars/Index">Employees</a>
+        <a href="/Inventories/Index">Inventory</a>
+        <a href="/Revenues/Index">Expense / Revenue</a>
+        
         <div class="subnav">
-            <button class="subnavbtn">Employees <i class="fa fa-caret-down"></i></button>
+            <button class="subnavbtn">Dresses <i class="fa fa-caret-down"></i></button>
             <div class="subnav-content">
-                <a class="col-md-offset-4" href="/Thekedars/Index">Thekedar</a>
-                <a href="/Employees/Index">Other Employees</a>
-                <a href="/EmployeeSalaries/Index">Employee Salary</a>
-            </div>
-        </div>
-        <div class="subnav">
-            <button class="subnavbtn">Inventory <i class="fa fa-caret-down"></i></button>
-            <div class="subnav-content">
-                <a class="col-md-offset-4" href="/Inventories/Index">Inventory Type</a>
-                <a href="/InventoryRecords/Index">Inventory Record</a>
-                <a href="/TotalInventory/Index">Total Inventory</a>
-            </div>
-        </div>
-        <div class="subnav">
-            <button class="subnavbtn">stock <i class="fa fa-caret-down"></i></button>
-            <div class="subnav-content">
-
-                <a class="col-md-offset-4" href="/Stocks/Index">Stock List</a>
+                <a class="col-md-offset-4" href="/Stocks/Index">Dress List</a>
                 <a href="/Orders/Index">Orders</a>
-                <a href="/StockCreationHistories/Index">Stock Creation Record</a>
+                <a href="/ThekedarOrders/Index">thekedar Orders</a>
+                <a href="/StockCreationHistories/Index">Dress Production</a>
 
             </div>
         </div>
-        <div class="subnav">
+        @*<div class="subnav">
             <button class="subnavbtn">Expense <i class="fa fa-caret-down"></i></button>
             <div class="subnav-content">
-
                 <a class="col-md-offset-4" href="/ExpenseTypes/Index">Expense Type</a>
                 <a href="/ExpenseDetails/Index">Expense Details</a>
- 
             </div>
-        </div>
-        <div class="subnav">
-            <button class="subnavbtn">Revenue <i class="fa fa-caret-down"></i></button>
-            <div class="subnav-content">
+        </div>*@
 
-                <a class="col-md-offset-4" href="/Revenues/Index">Revenue List</a>
-                <a href="/TotalRevenues/Index">Expense Sheet</a>
-
-            </div>
-        </div>
-        <a class="col-md-1" href="/Account/Index"><i class="fa fa-sign-out"></i>Logout</a>
+        <a class="col-md-1 col-md-offset-4" href="/Account/Index"><i class="fa fa-sign-out"></i>Logout</a>
     </div>
     @RenderBody()
 </body>
 </html>
+@*<style>
+    .btn { /*dent around button*/
+        display: inline-block;
+        position: relative;
+        text-decoration: none;
+        color: rgba(3, 169, 244, 0.54);
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        text-align: center;
+        background: #f7f7f7;
+        box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.08);
+    }
+
+        .btn .fa { /*Button itself*/
+            position: absolute;
+            content: '';
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            vertical-align: middle;
+            left: 10px;
+            top: 9px;
+            border-radius: 50%;
+            font-size: 40px;
+            background-image: -webkit-linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+            background-image: linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+            text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
+            box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+            border-bottom: solid 2px #b5b5b5;
+        }
+
+            .btn .fa:active {
+                background-image: -webkit-linear-gradient(#efefef 0%, #d6d6d6 100%);
+                box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+                border-bottom: solid 2px #d8d8d8;
+            }
+</style>*@

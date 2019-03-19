@@ -48,10 +48,10 @@
     $(document).ready(function () {
         var count = 1;
         $.ajax({
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    type: 'POST',
-                    url: '/EmployeeSalaries/GetEmployees',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '/EmployeeSalaries/GetEmployees',
             success: function (data) {
                 $.each(data.employeelist, function (i, item) {
                     $("#subdiv").append('<div class="col-md-12"><div class="col-md-2"><span id="name' + count + '">' + item + '</span></div>' +

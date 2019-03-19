@@ -46,10 +46,23 @@ namespace WebApplication7.Controllers
         public JsonResult FindOrderNo()
         {
             int No;
+            int Order_No;
+            int thekedarOrder_No;
             try
             {
-                No = (int)db.Orders.Select(x => x.OrderNo).Max();
-                No++;
+                Order_No = (int)db.Orders.Select(x => x.OrderNo).Max();
+                thekedarOrder_No = (int)db.ThekedarOrders.Select(x => x.OrderNo).Max();
+
+                if (Order_No > thekedarOrder_No)
+                {
+                    Order_No++;
+                    No = Order_No;
+                }
+                else
+                {
+                    thekedarOrder_No++;
+                    No = thekedarOrder_No;
+                }
 
             }
             catch

@@ -38,8 +38,10 @@ namespace WebApplication7.Models
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<StockCreationHistory> StockCreationHistories { get; set; }
         public virtual DbSet<Thekedar> Thekedars { get; set; }
+        public virtual DbSet<ThekedarOrder> ThekedarOrders { get; set; }
         public virtual DbSet<TotalInventory> TotalInventories { get; set; }
         public virtual DbSet<TotalRevenue> TotalRevenues { get; set; }
+        public virtual DbSet<TotalSalary> TotalSalaries { get; set; }
         public virtual DbSet<WeekNumber> WeekNumbers { get; set; }
     }
 }

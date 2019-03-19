@@ -14,10 +14,19 @@ namespace WebApplication7.Models
     
     public partial class Thekedar
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Thekedar()
+        {
+            this.ThekedarOrders = new HashSet<ThekedarOrder>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string CNIC { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ThekedarOrder> ThekedarOrders { get; set; }
     }
 }

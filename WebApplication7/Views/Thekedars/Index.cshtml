@@ -1,9 +1,12 @@
-﻿@model IEnumerable<WebApplication7.Models.Thekedar>
+﻿
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
 }
+
+
+@*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>*@
 
 <style>
     .col-lg-2 {
@@ -32,75 +35,444 @@
     td {
         text-align: left;
     }
+    /*#navbox a:hover {
+        background-color: transparent !important;
+        color: white;
+        border-bottom: 4px solid white;
+    }
+
+    #navbox a:focus {
+        background-color: transparent !important;
+        color: white;
+        border-bottom: 4px solid white;
+    }*/
+    /*#maindiv123 {
+        background-image: url('../images/s2.jpg');
+    }*/
+    .color:hover {
+        opacity: 1
+    }
+
+    .tab .nav-tabs {
+        border-bottom: 0 none;
+        background: #eaeaea;
+        border-radius: 0 20px 0 20px;
+    }
+
+        .tab .nav-tabs li a {
+            background: transparent;
+            border-radius: 0;
+            font-size: 16px;
+            border: none;
+            color: #333;
+            padding: 12px 22px;
+        }
+
+            .tab .nav-tabs li a i {
+                margin-right: 10px;
+                color: #775ba3;
+            }
+
+        .tab .nav-tabs li:first-child a {
+            border-bottom-left-radius: 20px;
+        }
+
+        .tab .nav-tabs li.active a,
+        .tab .nav-tabs li.active a i {
+            border: 0 none;
+            background: #775ba3;
+            color: #fff;
+        }
+
+            .tab .nav-tabs li.active a:after {
+                content: "";
+                position: absolute;
+                left: 45%;
+                bottom: -14px;
+                border: 7px solid transparent;
+                border-top: 7px solid #775ba3;
+            }
+
+    .tab .tab-content {
+        padding: 12px;
+        color: #775bae;
+        font-size: 14px;
+        line-height: 24px;
+        margin-top: 25px;
+        border-bottom: none;
+    }
+
+    @@media only screen and (max-width: 480px) {
+        .tab .nav-tabs,
+        .tab .nav-tabs li {
+            width: 100%;
+            background: transparent;
+        }
+
+            .tab .nav-tabs li.active a {
+                border-radius: 10px 10px 0 0;
+            }
+
+            .tab .nav-tabs li:first-child a {
+                border-bottom-left-radius: 0;
+            }
+
+            .tab .nav-tabs li a {
+                margin-bottom: 10px;
+                border: 1px solid lightgray;
+            }
+
+            .tab .nav-tabs li.active a:after {
+                border: none;
+            }
+
+        .color {
+            background-color: orange;
+            border: none;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+            margin: 4px 2px;
+            opacity: 0.6;
+            transition: 0.8s;
+        }
+    }
+
+
+    .container {
+        position: relative;
+        text-align: center;
+        color: white;
+    }
+
+    /* Bottom left text */
+    .bottom-left {
+        position: absolute;
+        bottom: 8px;
+        left: 16px;
+    }
+
+    /* Top left text */
+    .top-left {
+        position: absolute;
+        top: 8px;
+        left: 16px;
+    }
+
+    /* Top right text */
+    .top-right {
+        position: absolute;
+        top: 8px;
+        right: 16px;
+    }
+
+    /* Bottom right text */
+    .bottom-right {
+        position: absolute;
+        bottom: 8px;
+        right: 16px;
+    }
+
+    /* Centered text */
+    .centered {
+        position: absolute;
+        top: 30%;
+        left: 40%;
+        transform: translate(-50%, -50%);
+    }
+    .centered1 {
+        position: absolute;
+        top: 40%;
+        left: 40%;
+        transform: translate(-50%, -50%);
+    }
+    h1 {
+        letter-spacing: 14.5px;
+        font-size:75px;
+    }
+
+
+
 </style>
 <script>
     $(document).ready(function () {
-        $('#example').DataTable();
-        drawTable();
-    });
-    function drawTable() {
-        $('#example_filter').addClass("form-group");
-        $('#example_filter').addClass("has-feedback");
-        $('#example_length').addClass("col-lg-9 col-md-8 col-sm-12 col-xs-12");
-        $('#example_wrapper').css("text-align", "right");
-        $('#example_length').css("text-align", "left");
-        $('#example_length label').addClass("col-md-3 col-sm-12 col-lg-2");
-        $("#example_length label").css("text-align", "left");
-        $('#example_length label').addClass("col-md-2 col-lg-2 col-sm-12");
-        $('#example_filter input').css({ "border": "1px solid #ddd", "height": "30px", "margin-top": "0px", "outline": "none", "padding-left": "10px", "color": "#000000 !important" });
+        
+        var count = 1;
+        $.ajax({
+            type: "POST",
+            url: "/Thekedars/GetAllEmployees",
+            success: function (data) {
+                $.each(data.Employeelist, function (i, item) {
+                    $("#etable").append('<tr><td>' + item.Id + '</td><td>' + item.Name + '</td><td>' + item.PhoneNumber + '</td><td>' + item.CNIC + '</td><td>' + item.Address + '</td></tr>');
+                })
+                $.each(data.thekedarlist, function (i, item) {
+                    $("#ttable").append('<tr><td>' + item.Id + '</td><td>' + item.Name + '</td><td>' + item.PhoneNumber + '</td><td>' + item.CNIC + '</td><td>' + item.Address + '</td></tr>');
+                })
+                $.each(data.Salarylist, function (i, item) {
+                    var ab = "";
+                    if (item.Date != null) {
+                        var time = item.Date;
+                        var startsplit = time.split('(')[1];
+                        var endsplit = startsplit.split(')')[0];
+                        var endsp = parseInt(endsplit);
+                        var d = new Date(endsp);
+                        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                        var mm = months[new Date(endsp).getMonth()];
+                        var dd = new Date(endsp).getDate();
+                        var yy = new Date(endsp).getFullYear();
+                        ab = dd + ' ' + mm + ' ' + yy;
+                    }
+                    $("#stable").append('<tr><td>' + item.Id + '</td><td>' + item.Name + '</td><td>' + item.Total + '</td><td>' + ab + '</td><td>' + item.WeekNo + '</td></tr>');
+                })
+                $.each(data.employeenames, function (i, item) {
+                    var list = $("#WeekId").html();
+                    $("#subdiv").append('<div class="col-md-12"><div class="col-md-1"><span id="name' + count + '">' + item + '</span></div>' +
+                        '<div class="col-md-3"><div class="col-md-6"><input type="number" onkeyup="CalSal(' + count + ')" id="hours' + count + '" class="form-control" /></div>' +
+                        '<div class="col-md-6"><input type="number" onkeyup="CalSal(' + count + ')" id="hourlyrate' + count + '" class="form-control" /></div></div>' +
+                        '<div class="col-md-2">'+
+                        '<select class= "form-control"  id="week' + count + '" style = "margin-top:0px" > ' + list +
+                        '</select>'+
+                        '</div > ' +
+                        '<div class="col-md-3"><input type="date" id="date' + count + '" class="form-control" /></div>' +
+                        '<div class="col-md-2"><input type="number" id="total' + count + '" class="form-control" readonly/></div>' +
+                        '<div class="col-md-1"><button onclick="SaveSalary(' + count + ')" class="btn btn-success">Paid</button></div><br /><br /></div>')
+                    count++;
+                })
 
-        $('#example_filter input').addClass("add");
-        $('#example_filter').append('<span class="form-control-feedback" style="margin-top: -25px;  color: #666;"></span>');
-        var list = $("#Position").html();
-        $('#example_length').append(
-            '<div class="col-md-4">' +
-            '<button class="form-control" id="cre" onclick=window.location.href="/Thekedars/Create"  value="Create"  style="border-radius:45px; width:135%; margin-bottom:10px; border-color:#1cc7d0;color:#1cc7d0;background-color:#ffffff"><i class="fa fa-plus" aria-hidden="true"></i> Add New</button>' +
-            '</div>'
-        );
-        $("#Class").prepend("<option value='0' selected>All</option>");
+            }
+        })
+    });
+    var SalaryDetail =
+    {
+        Name: '',
+        Hours: '',
+        HourlyRate: '',
+        Date: '',
+        Week: '',
+        Total: '',
+    };
+    function SaveSalary(e) {
+        debugger;
+        SalaryDetail = Object.create(SalaryDetail);
+        SalaryDetail.Name = $('#name' + e).html();
+        SalaryDetail.Hours = $('#hours' + e).val();
+        SalaryDetail.HourlyRate = $('#hourlyrate' + e).val();
+        SalaryDetail.Week = $('#week' + e).val();
+        SalaryDetail.Date = $('#date' + e).val();
+        SalaryDetail.Total = $('#total' + e).val();
+        $.ajax({
+            type: 'POST',
+            url: '/Thekedars/SaveSalary',
+            data: SalaryDetail,
+            success: function (data) {  
+                $("#success").html("");
+                $("#Error").html("");
+                if (data == 'True') {
+                    debugger;
+                    $("#success").html("Success: Salary Added!")
+                   $('#hours' + e).val("");
+                   $('#hourlyrate' + e).val("");
+                   $('#total' + e).val("");
+                } else if (data=='False') {
+                    $("#Error").html("Error: " + $('#name' + e).html()+"'s Salary already Added!")
+                }
+            }
+        });
+    }
+    function CalSal(e) {
+        var hrs = $("#hours" + e).val();
+        var hrate = $("#hourlyrate" + e).val();
+        var salary = hrs * hrate;
+        $("#total" + e).val(salary);
     }
 </script>
-
-<div class="popular-bran-right" id="maindiv" style="background-color:#ffffff;margin-top:0px;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
-    <h2>Thekedar List</h2>
-    <hr />
-
-    <table id="example" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Address)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CNIC)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PhoneNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CNIC)
-                    </td>
-
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="container" style="width:100%;padding:0px">
+    <img src="~/Content/images/forma 4imgaes.jpg"  style="width:100%;height:600px;margin-top:-20px" />
+    @*<img src="~/Content/images/b46-popular-styles-of-pakistani-bridal-dresses.jpg" style="width:100%;height:600px;margin-top:-20px" />*@
+    <div class="centered"><h1>Tehzeeb</h1></div>
+    <div class="centered1"><h1 style="font-size:40px">Formal wears</h1></div>
 </div>
+
+
+<div class="col-md-12 popular-bran-right" id="maindiv" style="background-color:#f7f7f7;margin-top:0px;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+
+    <!------------------------------- Nav CREATE tabs -------------------------------->
+
+    <div class="col-md-8 col-md-offset-2" style="margin-top:50px">
+        <div class="tab" role="tabpanel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#Section11" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-group"></i>Employees List</a></li>
+                <li role="presentation"><a href="#Section22" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-male"></i>Thekedar List</a></li>
+                <li role="presentation"><a href="#Section33" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-money"></i>Salary List</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+          
+                <div role="tabpanel" class="tab-pane fade in active" id="Section11">
+                   
+                    <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+                      
+                        <h4>Employees List</h4>
+                        <hr />
+                        <table class="table" id="example">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Id
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Phone#
+                                    </th>
+                                    <th>
+                                        CNIC
+                                    </th>
+                                    <th>
+                                        Address
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="etable"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane fade" id="Section22">
+                    <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+                        <h4>Thekedar List</h4>
+                        <hr />
+                        <table class="table" id="example">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Id
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Phone#
+                                    </th>
+                                    <th>
+                                        CNIC
+                                    </th>
+                                    <th>
+                                        Address
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="ttable"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane fade" id="Section33">
+                    <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+                        <h4>Salary List</h4>
+                        <hr />
+                        <table class="table" id="example">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Id
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Amount
+                                    </th>
+                                    <th>
+                                        Date
+                                    </th>
+                                    <th>
+                                        Week#
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="stable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!------------------------------- Nav CREATE tabs -------------------------------->
+
+
+    <div class="col-md-8 col-md-offset-2" style="margin-top:100px;margin-bottom:100px">
+        <div class="tab" role="tabpanel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-group"></i>Employees</a></li>
+                <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-male"></i>Thekedar</a></li>
+                <li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-money"></i>Salary</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="Section1">
+
+                    <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+                        <h4>Add New Employee</h4>
+                        <hr />
+                        <form action="/Thekedars/SaveEmployees" method="post">
+                            <div class="col-md-3"><input type="text" class="form-control" name="FullName" placeholder="Full Name" /></div>
+                            <div class="col-md-3"><input type="text" class="form-control" name="Phone" placeholder="Phone #" /></div>
+                            <div class="col-md-3"><input type="text" class="form-control" name="CNIC" placeholder="CNIC" /></div><br /><br />
+                            <div class="col-md-9"><input type="text" class="form-control" name="Address" placeholder="Address" /></div><br /><br />
+                            <input class="col-md-2 form-control color"  type="submit" value="Save" style="border-radius:35px;color:white;border:hidden;background-color:#775bae;font-size:15px;width:98px;height:38px;font-family:Calibri" />
+                          </form>
+                            <br /><br />
+
+                    </div>
+
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="Section2">
+                    <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+                        <h4>Add New Thekedar</h4>
+                        <hr />
+                        <form action="/Thekedars/SaveThekedars" method="post">
+                            <div class="col-md-3"><input type="text" class="form-control" name="FullName" placeholder="Full Name" /></div>
+                            <div class="col-md-3"><input type="text" class="form-control" name="Phone" placeholder="Phone #" /></div>
+                            <div class="col-md-3"><input type="text" class="form-control" name="CNIC" placeholder="CNIC" /></div><br /><br />
+                            <div class="col-md-9"><input type="text" class="form-control" name="Address" placeholder="Address" /></div><br /><br />
+                            <input class="col-md-2 form-control color" type="submit" value="Save" style="border-radius:35px;color:white;border:hidden;background-color:#775bae;font-size:15px;width:98px;height:38px;font-family:Calibri" />
+                        </form>
+                            <br /><br />
+
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="Section3">
+                    <div class="col-md-12" id="subdiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+                        <h4>Employee Salary</h4>
+                        <h5 class="col-md-offset-4"  id="Error" style="color:red;font-family:900px !important"></h5>
+                        <h5 class="col-md-offset-4" id="success" style="color:green"></h5>
+                        <hr />
+
+                        <div class="col-md-1">
+                            <span><b>Name</b></span>
+                        </div>
+                        <div style="display: none">
+                            @Html.DropDownList("WeekId", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-6" style="text-align:center"><span><b>Hours</b></span></div>
+                            <div class="col-md-6" style="text-align:center"><span><b>Hourly Rate</b></span></div>
+                        </div>
+                        <div class="col-md-2" style="text-align:center"><span><b>Week #</b></span></div>
+                        <div class="col-md-3" style="text-align:center"><span><b>Date</b></span></div>
+                        <div class="col-md-2" style="text-align:center"><span><b>Total</b></span></div>
+                        <br /><br />
+                    </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

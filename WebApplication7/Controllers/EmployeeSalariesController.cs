@@ -94,6 +94,7 @@ namespace WebApplication7.Controllers
             {
                 db.EmployeeSalaries.Add(employeeSalary);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 

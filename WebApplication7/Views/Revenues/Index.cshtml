@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication7.Models.Revenue>
+﻿
 
 @{
     ViewBag.Title = "Index";
@@ -32,77 +32,368 @@
     td {
         text-align: left;
     }
+    /*#navbox a:hover {
+        background-color: transparent !important;
+        color: white;
+        border-bottom: 4px solid white;
+    }
+
+    #navbox a:focus {
+        background-color: transparent !important;
+        color: white;
+        border-bottom: 4px solid white;
+    }*/
+    /*#maindiv123 {
+        background-image: url('../images/s2.jpg');
+    }*/
+    .color:hover {
+        opacity: 1 !important
+    }
+
+    .tab .nav-tabs {
+        border-bottom: 0 none;
+        background: #eaeaea;
+        border-radius: 0 20px 0 20px;
+    }
+
+        .tab .nav-tabs li a {
+            background: transparent;
+            border-radius: 0;
+            font-size: 16px;
+            border: none;
+            color: #333;
+            padding: 12px 22px;
+        }
+
+            .tab .nav-tabs li a i {
+                margin-right: 10px;
+                color: #775ba3;
+            }
+
+        .tab .nav-tabs li:first-child a {
+            border-bottom-left-radius: 20px;
+        }
+
+        .tab .nav-tabs li.active a,
+        .tab .nav-tabs li.active a i {
+            border: 0 none;
+            background: #775ba3;
+            color: #fff;
+        }
+
+            .tab .nav-tabs li.active a:after {
+                content: "";
+                position: absolute;
+                left: 45%;
+                bottom: -14px;
+                border: 7px solid transparent;
+                border-top: 7px solid #775ba3;
+            }
+
+    .tab .tab-content {
+        padding: 12px;
+        color: #775bae;
+        font-size: 14px;
+        line-height: 24px;
+        margin-top: 25px;
+        border-bottom: none;
+    }
+
+    @@media only screen and (max-width: 480px) {
+        .tab .nav-tabs,
+        .tab .nav-tabs li {
+            width: 100%;
+            background: transparent;
+        }
+
+            .tab .nav-tabs li.active a {
+                border-radius: 10px 10px 0 0;
+            }
+
+            .tab .nav-tabs li:first-child a {
+                border-bottom-left-radius: 0;
+            }
+
+            .tab .nav-tabs li a {
+                margin-bottom: 10px;
+                border: 1px solid lightgray;
+            }
+
+            .tab .nav-tabs li.active a:after {
+                border: none;
+            }
+
+        .color {
+            background-color: orange;
+            border: none;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+            margin: 4px 2px;
+            opacity: 0.6;
+            transition: 0.8s;
+        }
+    }
 </style>
 <script>
     $(document).ready(function () {
-        $('#example').DataTable();
-        drawTable();
-    });
-    function drawTable() {
-        $('#example_filter').addClass("form-group");
-        $('#example_filter').addClass("has-feedback");
-        $('#example_length').addClass("col-lg-9 col-md-8 col-sm-12 col-xs-12");
-        $('#example_wrapper').css("text-align", "right");
-        $('#example_length').css("text-align", "left");
-        $('#example_length label').addClass("col-md-3 col-sm-12 col-lg-2");
-        $("#example_length label").css("text-align", "left");
-        $('#example_length label').addClass("col-md-2 col-lg-2 col-sm-12");
-        $('#example_filter input').css({ "border": "1px solid #ddd", "height": "30px", "margin-top": "0px", "outline": "none", "padding-left": "10px", "color": "#000000 !important" });
+        $("#WeekId").prepend("<option value='0' selected>Select Week</option>");
+        var count = 1;
+        $.ajax({
+            type: "POST",
+            url: "/Revenues/GetAllRevenues",
+            success: function (data) {
+                debugger;
 
-        $('#example_filter input').addClass("add");
-        $('#example_filter').append('<span class="form-control-feedback" style="margin-top: -25px;  color: #666;"></span>');
-        var list = $("#Position").html();
-        $('#example_length').append(
-            '<div class="col-md-4">' +
-            '<button class="form-control" id="cre" onclick=window.location.href="/Revenues/Create"  value="Create"  style="border-radius:45px; width:135%; margin-bottom:10px; border-color:#1cc7d0;color:#1cc7d0;background-color:#ffffff"><i class="fa fa-plus" aria-hidden="true"></i> Add New</button>' +
-            '</div>'
-        );
-        $("#Class").prepend("<option value='0' selected>All</option>");
-    }
-</script>
+                $.each(data.revenue, function (i, item) {
+                    debugger;
+                    $("#etable").append('<tr><td>' + item.Id + '</td><td>' + item.Name + '</td><td>' + item.Amount + '</td><td>' + item.WeekNo + '</td></tr>');
+                })
+                $.each(data.totalrevenue, function (i, item) {
+                    debugger;
+                    var ab = "";
+                    if (item.Date != null) {
+                        var time = item.Date;
+                        var startsplit = time.split('(')[1];
+                        var endsplit = startsplit.split(')')[0];
+                        var endsp = parseInt(endsplit);
+                        var d = new Date(endsp);
+                        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                        var mm = months[new Date(endsp).getMonth()];
+                        var dd = new Date(endsp).getDate();
+                        var yy = new Date(endsp).getFullYear();
+                        ab = dd + ' ' + mm + ' ' + yy;
+                    }
 
+                    $("#ttable").append('<tr><td>' + item.Id + '</td><td>' + item.Name + '</td><td>' + item.PreviousBalance + '</td><td>' + item.Less + '</td><td>' + item.Add + '</td><td>' + item.CurrentBalance + '</td><td>' + ab + '</td><td>' + item.WeekNo + '</td></tr>');
+                })
 
+                $.each(data.ExpenseType, function (i, item) {
+                    debugger;
 
-<div class="popular-bran-right" id="maindiv" style="background-color:#ffffff;margin-top:0px;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
-    <h2>Revenue List</h2>
-    <hr />
-    <table id="example" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Amount)
-                </th>
-                <th>
-                    Week#
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Date)
-                </th>
-
-            </tr>
-            </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WeekNumber.WeekNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-
-            </tr>
+                    $("#stable").append('<tr><td>' + item.Id + '</td><td>' + item.Name + '</td></tr>');
+                })
+                $.each(data.ExpenseDetial, function (i, item) {
+                    var ab = "";
+                    if (item.Date != null) {
+                        var time = item.Date;
+                        var startsplit = time.split('(')[1];
+                        var endsplit = startsplit.split(')')[0];
+                        var endsp = parseInt(endsplit);
+                        var d = new Date(endsp);
+                        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                        var mm = months[new Date(endsp).getMonth()];
+                        var dd = new Date(endsp).getDate();
+                        var yy = new Date(endsp).getFullYear();
+                        ab = dd + ' ' + mm + ' ' + yy;
+                    }
+                    $("#Exptable").append('<tr><td>' + item.Id + '</td><td>' + item.Name + '</td><td>' + item.Description + '</td><td>' + item.Amount + '</td><td>' + ab + '</td><td>' + item.WeekNo + '</td></tr>');
+                })
             }
-        </tbody>
-    </table>
+        })
+    });
+
+</script>
+<div class="col-md-12 popular-bran-right" id="maindiv" style="background-color:#f7f7f7;margin-top:0px;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+
+    <!------------------------------- Nav CREATE tabs -------------------------------->
+    <div class="col-md-8 col-md-offset-2" style="margin-top:50px">
+        <div class="tab" role="tabpanel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#Section11" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-group"></i>Revenue List</a></li>
+                <li role="presentation"><a href="#Section22" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-male"></i>Expense Sheet</a></li>
+                <li role="presentation"><a href="#Section33" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-male"></i>Expense Type</a></li>
+                <li role="presentation"><a href="#Section44" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-male"></i>Expense Detail</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="Section11">
+                    <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+                        <h4>Revenue List</h4>
+                        <hr />
+                        <table class="table" id="example">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Id
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Amount
+                                    </th>
+                                    <th>
+                                        Week #
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="etable"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane fade" id="Section22">
+                    <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+                        <h4>Total Revenue</h4>
+                        <hr />
+                        <table class="table" id="example">
+                            <thead>
+                                <tr>
+
+                                    <th>
+                                        Id
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        PreviousBalance
+                                    </th>
+                                    <th>
+                                        Ouflow
+                                    </th>
+                                    <th>
+                                        Inflow
+                                    </th>
+                                    <th>
+                                        Current Balance
+                                    </th>
+                                    <th>
+                                        Date
+                                    </th>
+                                    <th>
+                                        Week #
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="ttable"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane fade" id="Section33">
+                    <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+                        <h4>Expense Type</h4>
+                        <hr />
+                        <table class="table" id="example">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Id
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="stable"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="Section44">
+                    <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+                        <h4>Expense Details</h4>
+                        <hr />
+                        <table class="table" id="example">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Id
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Description
+                                    </th>
+                                    <th>
+                                        Amount
+                                    </th>
+                                    <th>
+                                       Date
+                                    </th>
+                                    <th>
+                                        Week #
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="Exptable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!------------------------------- Nav CREATE Tabs -------------------------------->
+
+
+    <div class="col-md-8 col-md-offset-2" style="margin-top:100px;margin-bottom:100px">
+        <div class="tab" role="tabpanel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-group"></i>Revenue</a></li>
+                <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-male"></i>Expense Type</a></li>
+                <li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-money"></i>Expense Detail</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="Section1">
+
+                    <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+                        <h4>Add New Revenue</h4>
+                        <hr />
+                        <form action="/Revenues/SaveRevenue" method="post">
+                            <div class="col-md-3"><input type="text" name="Name" class="form-control" placeholder="Name" required /></div>
+                            <div class="col-md-3"><input type="text" name="Amount" class="form-control" placeholder="Amount" /></div>
+                            <div class="col-md-3"><input type="date" name="Date" class="form-control" placeholder="Date" /></div>
+                            <div class="col-md-3"> @Html.DropDownList("WeekId", null, htmlAttributes: new { @class = "form-control" })</div><br /><br />
+                            <div class="col-md-3">
+                                <input class="col-md-12 form-control color" type="submit" value="Save" style="color:white;border:hidden;background-color:#775bae;font-size:15px;width:100%;height:38px;" />
+                            </div>
+                            <br /><br />
+                        </form>
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane fade" id="Section2">
+                    <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+                        <h4>Expense Type</h4>
+                        <hr />
+                        <form action="/Revenues/SaveExpenseType" method="post">
+                            <div class="col-md-3"><input type="text" name="Name" class="form-control" placeholder="Name" required /></div>
+                            <div class="col-md-3">
+                                <input class="col-md-12 form-control color" type="submit" value="Save" style="color:white;border:hidden;background-color:#775bae;font-size:15px;width:100%;height:38px;" />
+                            </div>
+
+                            <br /><br />
+                        </form>
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane fade" id="Section3">
+                    <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
+                        <h4>Expense Details</h4>
+                        <hr />
+                        <form action="/Revenues/SaveExpenseDetails" method="post">
+                            
+                            <div class="col-md-3">@Html.DropDownList("ExpenseId", null, htmlAttributes: new { @class = "form-control" })</div>
+                            <div class="col-md-3"><input type="text" name="Description" class="form-control" placeholder="Description" /></div>
+                            <div class="col-md-3"><input type="date" name="Date" class="form-control" placeholder="Date" required /></div>
+                            <div class="col-md-3"><input type="text" name="Amount" class="form-control" placeholder="Amount" required /></div><br /><br />
+                            <div class="col-md-3"> @Html.DropDownList("WeekId", null, htmlAttributes: new { @class = "form-control" })</div><br /><br />
+                            <div class="col-md-3">
+                            <input class="col-md-12 form-control color" type="submit" value="Save" style="color:white;border:hidden;background-color:#775bae;font-size:15px;width:100%;height:38px;" />
+                            </div>
+                            <br /><br />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
