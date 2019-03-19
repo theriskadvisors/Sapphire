@@ -92,40 +92,85 @@ namespace WebApplication7.Controllers
             var weekid = Request.Form["WeekId"];
 
             //Expense Details//
-            ExpenseDetail rev = new  ExpenseDetail();
-            rev.ExpenseTypeId = Int32.Parse(expenseId);
-            rev.Amount = Int32.Parse(amount);
-            rev.Date = Convert.ToDateTime(date);
-            rev.WeekId = Int32.Parse(weekid);
-            db.ExpenseDetails.Add(rev);
-            db.SaveChanges();
-
-            //Total Revenue//
-            TotalRevenue tr = new TotalRevenue();
-            var totalrev = db.TotalRevenues.OrderByDescending(y => y.Id).FirstOrDefault();
-            var expType = db.ExpenseTypes.Where(x => x.Id == rev.ExpenseTypeId).Select(x => x.Name).FirstOrDefault();
-            tr.Name = expType;
-            tr.Add = 0;
-            tr.Less = Int32.Parse(amount); ;
-            if (totalrev == null)
+            var wid = Int32.Parse(weekid);
+            var expdet = db.ExpenseDetails.Where(x => x.ExpenseType.Name == "Salary" && x.WeekId == wid).FirstOrDefault();
+            if(expdet==null)
             {
-                tr.PreviousBalance = 0;
-                tr.CurrentBalance = 0;
+                ExpenseDetail rev = new ExpenseDetail();
+                rev.ExpenseTypeId = Int32.Parse(expenseId);
+                rev.Amount = Int32.Parse(amount);
+                rev.Date = Convert.ToDateTime(date);
+                rev.WeekId = Int32.Parse(weekid);
+                db.ExpenseDetails.Add(rev);
+                db.SaveChanges();
+
+                //Total Revenue//
+
+                TotalRevenue tr = new TotalRevenue();
+                var totalrev = db.TotalRevenues.OrderByDescending(y => y.Id).FirstOrDefault();
+                var eid = Int32.Parse(expenseId);
+                var expType = db.ExpenseTypes.Where(x => x.Id == eid).Select(x => x.Name).FirstOrDefault();
+                tr.Name = expType;
+                tr.Add = 0;
+                tr.Less = Int32.Parse(amount); ;
+                if (totalrev == null)
+                {
+                    tr.PreviousBalance = 0;
+                    tr.CurrentBalance = 0;
+                }
+                else
+                {
+                    tr.PreviousBalance = totalrev.CurrentBalance;
+                    tr.CurrentBalance = totalrev.CurrentBalance;
+                }
+                tr.CurrentBalance -= Int32.Parse(amount);
+                tr.Date = Convert.ToDateTime(date);
+                tr.WeekId = Int32.Parse(weekid);
+                db.TotalRevenues.Add(tr);
+                db.SaveChanges();
             }
             else
             {
-                tr.PreviousBalance = totalrev.CurrentBalance;
-                tr.CurrentBalance = totalrev.CurrentBalance;
+                ExpenseDetail rev = db.ExpenseDetails.Where(x => x.ExpenseType.Name == "Salary" && x.WeekId == wid).FirstOrDefault();
+                rev.Amount = Int32.Parse(amount);
+                db.SaveChanges();
+
+                //Total Revenue//
+                TotalRevenue tr = db.TotalRevenues.Where(x => x.WeekId == wid && x.Name == "Salary").FirstOrDefault();
+                tr.Less = Int32.Parse(amount); 
+                tr.CurrentBalance -= Int32.Parse(amount);
+                db.SaveChanges();
             }
-            tr.CurrentBalance -= Int32.Parse(amount);
-            tr.Date = Convert.ToDateTime(date);
-            tr.WeekId = Int32.Parse(weekid);
-            db.TotalRevenues.Add(tr);
-            db.SaveChanges();
+           
+
+           
             dbTransaction.Commit();
 
 
             return RedirectToAction("Index", "Revenues");
+        }
+        public ActionResult GetSalary(int week_id,int exp_type)
+        {
+            var expname = db.ExpenseTypes.Where(x => x.Id == exp_type).Select(x => x.Name).FirstOrDefault();
+            if(expname=="Salary")
+            {
+                var t_sal = db.TotalSalaries.Where(x =>x.WeekId==week_id).Select(x => x.SalarySum).FirstOrDefault();
+                if(t_sal==null)
+                {
+                    var t_res = "No";
+                    return Json(t_res, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(t_sal, JsonRequestBehavior.AllowGet);
+                }
+             
+            }
+            else
+            {
+                var result = "No";
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }    
         }
         // GET: Revenues/Details/5
         public ActionResult Details(int? id)

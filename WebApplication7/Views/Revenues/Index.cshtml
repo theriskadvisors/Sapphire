@@ -138,19 +138,18 @@
 <script>
     $(document).ready(function () {
         $("#WeekId").prepend("<option value='0' selected>Select Week</option>");
+        debugger;
         var count = 1;
         $.ajax({
             type: "POST",
             url: "/Revenues/GetAllRevenues",
             success: function (data) {
-                debugger;
-
                 $.each(data.revenue, function (i, item) {
-                    debugger;
                     $("#etable").append('<tr><td>' + item.Id + '</td><td>' + item.Name + '</td><td>' + item.Amount + '</td><td>' + item.WeekNo + '</td></tr>');
                 })
+                $('#table1').dataTable();
+                drawTable();
                 $.each(data.totalrevenue, function (i, item) {
-                    debugger;
                     var ab = "";
                     if (item.Date != null) {
                         var time = item.Date;
@@ -167,12 +166,14 @@
 
                     $("#ttable").append('<tr><td>' + item.Id + '</td><td>' + item.Name + '</td><td>' + item.PreviousBalance + '</td><td>' + item.Less + '</td><td>' + item.Add + '</td><td>' + item.CurrentBalance + '</td><td>' + ab + '</td><td>' + item.WeekNo + '</td></tr>');
                 })
-
+                $('#table2').DataTable();
+                drawTable();
                 $.each(data.ExpenseType, function (i, item) {
-                    debugger;
 
                     $("#stable").append('<tr><td>' + item.Id + '</td><td>' + item.Name + '</td></tr>');
                 })
+                $('#table3').DataTable();
+                drawTable();
                 $.each(data.ExpenseDetial, function (i, item) {
                     var ab = "";
                     if (item.Date != null) {
@@ -189,10 +190,55 @@
                     }
                     $("#Exptable").append('<tr><td>' + item.Id + '</td><td>' + item.Name + '</td><td>' + item.Description + '</td><td>' + item.Amount + '</td><td>' + ab + '</td><td>' + item.WeekNo + '</td></tr>');
                 })
+                $('#table4').DataTable();
+                drawTable();
             }
         })
     });
+    function GetSal(e) {
+        var week_id = e;
+        var exp_type = $("#ExpenseId").val();
+        $.ajax({
+            type: "POST",
+            url: "/Revenues/GetSalary",
+            data: { week_id: week_id, exp_type: exp_type },
+            success: function (data) {
+                debugger;
+                if (data != "No") {
+                    $("#SalaryId").val(data)
+                }
+                else {
+                    debugger;
+                    $("#SalaryId").val("");
+                }
+             
+            }
+        });
+        
+    }
+    function drawTable() {
+        debugger;
+        //NEW
+        $('#example_filter').addClass("form-group");
+        $('#example_filter').addClass("has-feedback");
+        $('#example_filter').parent("div").removeClass("col-sm-6");
+        $('#example_filter').parent("div").addClass("col-sm-3");
+        $('#example_length').parent("div").removeClass("col-sm-6");
+        $('#example_length').parent("div").addClass("col-sm-9");
+        //$('#example_length').children("label").removeClass("col-md-2");
+        //$('#example_length').children("label").removeClass("col-lg-2");
+        $('#example_length').addClass("col-lg-12 col-md-8 col-sm-12 col-xs-12");
+        $('#example_wrapper').css("text-align", "right");
+        $('#example_length').css("text-align", "center");
+        //$('#example_length label').addClass("col-md-3 col-sm-12 col-lg-2");
+        $("#example_length label").css("text-align", "left");
+        $('#example_length label').addClass("col-md-3");
+        $('#example_filter input').css({ "border": "1px solid #ddd", "height": "30px", "margin-top": "0px", "outline": "none", "padding-left": "10px", "color": "#000000 !important" });
+        $('#example_filter').append('<span class="form-control-feedback" style="margin-top: -25px;  color: #666;"></span>');
 
+        $('#example_length').append();
+       
+    }
 </script>
 <div class="col-md-12 popular-bran-right" id="maindiv" style="background-color:#f7f7f7;margin-top:0px;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
 
@@ -212,7 +258,7 @@
                     <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
                         <h4>Revenue List</h4>
                         <hr />
-                        <table class="table" id="example">
+                        <table class="table" id="table1">
                             <thead>
                                 <tr>
                                     <th>
@@ -238,7 +284,7 @@
                     <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
                         <h4>Total Revenue</h4>
                         <hr />
-                        <table class="table" id="example">
+                        <table class="table" id="table2">
                             <thead>
                                 <tr>
 
@@ -278,7 +324,7 @@
                     <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
                         <h4>Expense Type</h4>
                         <hr />
-                        <table class="table" id="example">
+                        <table class="table" id="table3">
                             <thead>
                                 <tr>
                                     <th>
@@ -298,7 +344,7 @@
                     <div class="col-md-12" id="maindiv" style="background-color:#ffffff;border-radius:5px;padding:10px;box-shadow: rgba(0, 0, 0, 0.16) 5px 10px 5px, rgba(0, 0, 0, 0.23) 0px 3px 5px">
                         <h4>Expense Details</h4>
                         <hr />
-                        <table class="table" id="example">
+                        <table class="table" id="table4">
                             <thead>
                                 <tr>
                                     <th>
@@ -380,12 +426,11 @@
                         <h4>Expense Details</h4>
                         <hr />
                         <form action="/Revenues/SaveExpenseDetails" method="post">
-                            
                             <div class="col-md-3">@Html.DropDownList("ExpenseId", null, htmlAttributes: new { @class = "form-control" })</div>
+                            <div class="col-md-3"> @Html.DropDownList("WeekId", null, htmlAttributes: new { @class = "form-control", @onchange = "GetSal(this.value)" })</div>
                             <div class="col-md-3"><input type="text" name="Description" class="form-control" placeholder="Description" /></div>
-                            <div class="col-md-3"><input type="date" name="Date" class="form-control" placeholder="Date" required /></div>
-                            <div class="col-md-3"><input type="text" name="Amount" class="form-control" placeholder="Amount" required /></div><br /><br />
-                            <div class="col-md-3"> @Html.DropDownList("WeekId", null, htmlAttributes: new { @class = "form-control" })</div><br /><br />
+                            <div class="col-md-3"><input type="date" name="Date" class="form-control" placeholder="Date" required /></div><br /><br />
+                            <div class="col-md-3"><input type="text" id="SalaryId" name="Amount" class="form-control" readonly required /></div><br /><br />
                             <div class="col-md-3">
                             <input class="col-md-12 form-control color" type="submit" value="Save" style="color:white;border:hidden;background-color:#775bae;font-size:15px;width:100%;height:38px;" />
                             </div>
